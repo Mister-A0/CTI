@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Week 6 - CTI Questions &amp; Exam Mode</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600;800&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#090d16;--card:#111827;--hover:#162032;--text:#f8fafc;--muted:#94a3b8;--border:rgba(255,255,255,.1);--ok:#10b981;--bad:#f43f5e}
+[data-theme="light"]{--bg:#f8fafc;--card:#fff;--hover:#f1f5f9;--text:#0f172a;--muted:#475569;--border:rgba(0,0,0,.1)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',system-ui,sans-serif;line-height:1.6;min-height:100vh;overflow-x:hidden}
+header{max-width:900px;margin:0 auto;padding:56px 24px 16px;position:relative}
+.badge{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;padding:4px 12px;border-radius:20px;background:rgba(16,185,129,.15);color:#10b981;border:1px solid rgba(16,185,129,.3)}
+h1{font-size:clamp(26px,6vw,38px);font-weight:800;margin:14px 0 8px;line-height:1.2}
+h1 span{background:linear-gradient(135deg,#10b981,#06b6d4);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.sub{color:var(--muted)}
+.top{position:absolute;top:20px;right:24px;display:flex;gap:8px}
+.top button,.top a{width:44px;height:44px;background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:10px;cursor:pointer;font-size:18px;text-decoration:none;display:flex;align-items:center;justify-content:center}
+.modes{max-width:900px;margin:0 auto;padding:8px 24px;display:flex;gap:10px;flex-wrap:wrap}
+.btn{font:inherit;font-weight:700;font-size:14px;padding:10px 18px;border-radius:10px;border:1px solid var(--border);background:var(--card);color:var(--text);cursor:pointer}
+.btn.on,.btn.primary{background:#10b981;color:#04130c;border-color:#10b981}
+main{max-width:900px;margin:0 auto;padding:8px 24px 56px}
+h2.part{font-family:'JetBrains Mono',monospace;font-size:13px;color:#10b981;text-transform:uppercase;letter-spacing:1px;margin:28px 0 10px}
+.q{background:var(--card);border:1px solid var(--border);border-top:3px solid var(--c,#10b981);border-radius:16px;padding:20px;margin-bottom:16px}
+.mcq{--c:#3b82f6}.tf{--c:#a855f7}.sa{--c:#f59e0b}
+.meta{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:800;color:var(--c);margin-bottom:8px}
+.qt{font-weight:600;margin-bottom:12px;overflow-wrap:anywhere}
+.opt{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--border);border-radius:10px;margin-bottom:8px;cursor:pointer;background:var(--hover)}
+.opt input{margin-top:5px}
+.opt.right{border-color:var(--ok);background:rgba(16,185,129,.15)}
+.opt.wrong{border-color:var(--bad);background:rgba(244,63,94,.15)}
+.ans{margin-top:12px;padding:12px 14px;border-left:3px solid var(--ok);background:rgba(16,185,129,.08);border-radius:8px;font-size:14px;white-space:pre-line}
+#bar{max-width:900px;margin:0 auto;padding:0 24px 8px}
+#result{display:none;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:16px;font-weight:700}
+.hide{display:none!important}
+.timer{font-family:'JetBrains Mono',monospace;color:var(--muted);align-self:center}
+footer{text-align:center;padding:24px 16px;color:var(--muted);font-size:13px;border-top:1px solid var(--border)}
+@media(max-width:600px){header{padding:72px 16px 12px}.modes,main,#bar{padding-left:16px;padding-right:16px}.top{top:16px;right:16px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="top"><a href="index.html" aria-label="Home">&#8962;</a><button id="theme" aria-label="Toggle theme">&#9788;</button></div>
+  <span class="badge">Week 6 &middot; CCY4403</span>
+  <h1><span>Week 6</span> Questions</h1>
+  <p class="sub">Malware Analysis (Static + Dynamic) Recap. Study Mode shows every question with its answer. Exam Mode quizzes you on the MCQ and True/False questions.</p>
+</header>
+<div class="modes">
+  <button class="btn on" id="bStudy">Study Mode</button>
+  <button class="btn" id="bExam">Exam Mode (MCQ + T/F)</button>
+  <span class="timer hide" id="timer"></span>
+</div>
+<div id="bar"></div>
+<main id="app"></main>
+<footer>&copy; Zaneso &mdash; Cyber Threat Intelligence Course Notes</footer>
+<script>
+const D=[{"part": "Part 1 \u00b7 Why It Matters", "n": "Q1", "type": "mcq", "label": "Q1 \u00b7 Multiple Choice (MCQ)", "tag": "SINGLE ANSWER", "q": "In the CTI pipeline, the primary purpose of static and dynamic malware analysis output is to:", "opts": ["Characterize a single sample as fully as possible for the malware analyst's own report.", "Serve as inputs that produce Level 1/2 indicators and enrichment context for the CTI pipeline.", "Replace OSINT collection as the primary Level 1 source.", "Substitute for the threat actor profiling done in Week 3."], "ans": 1, "ansText": "Correct: B \u2014 Week 6 reframes analysis output as a CTI input, not an end in itself. Trap: option A is the standalone Malware Analysis course's framing."}, {"part": "Part 1 \u00b7 Why It Matters", "n": "Q2", "type": "tf", "label": "Q2 \u00b7 True or False", "tag": "BINARY", "q": "Week 6 re-teaches the static and dynamic analysis techniques that students already learned in the standalone Malware Analysis & Reverse Engineering course.", "ans": false, "ansText": "Answer: FALSE \u2014 Week 6 assumes prior technique knowledge. It is a recap + integration week; the recap slides are checklist level only."}, {"part": "Part 2 \u00b7 Static Analysis Recap", "n": "Q1", "type": "mcq", "label": "Q1 \u00b7 Multiple Choice (MCQ)", "tag": "SINGLE ANSWER", "q": "Which static-analysis output maps directly onto the Week 5 'computed indicator' type?", "opts": ["Embedded strings", "File hash (MD5/SHA-256)", "PE import table", "Section entropy value"], "ans": 1, "ansText": "Correct: B \u2014 A file hash is a derived/computed value. The other three are contextual enrichment. Strings are atomic indicators or behavioral hints, not computed."}, {"part": "Part 2 \u00b7 Static Analysis Recap", "n": "Q2", "type": "tf", "label": "Q2 \u00b7 True or False", "tag": "BINARY", "q": "A high-entropy PE section is, on its own, sufficient evidence to classify a sample as malicious in a CTI enrichment record.", "ans": false, "ansText": "Answer: FALSE \u2014 High entropy only flags a likely packed or encrypted section; legitimate packers (UPX on benign software) also produce it. Flags enrich; indicators assert."}, {"part": "Part 3 \u00b7 Dynamic Analysis Recap", "n": "Q1", "type": "mcq", "label": "Q1 \u00b7 Multiple Choice (MCQ)", "tag": "SINGLE ANSWER", "q": "In Week 4's level model, what role does a sandbox verdict play?", "opts": ["It is a Level 1 atomic indicator.", "It is a Level 2 threat data feed source.", "It is a Level 3 finished intelligence product.", "It is a Week 5 enrichment field only."], "ans": 1, "ansText": "Correct: B \u2014 The verdict + artifacts together constitute the Level 2 feed, not just individual IoCs. Trap: confusing the verdict with the Level 1 indicators it produces."}, {"part": "Part 3 \u00b7 Dynamic Analysis Recap", "n": "Q2", "type": "tf", "label": "Q2 \u00b7 True or False", "tag": "BINARY", "q": "A registry-persistence sequence observed during dynamic analysis is best classified as a behavioral indicator (IOA), not a computed indicator.", "ans": true, "ansText": "Answer: TRUE \u2014 Behavior sequences are IOAs per Week 5's taxonomy. Computed indicators are derived values such as hashes."}, {"part": "Part 4 \u00b7 Merged Workflow", "n": "Q1", "type": "mcq", "label": "Q1 \u00b7 Multiple Choice (MCQ)", "tag": "SINGLE ANSWER", "q": "In the merged workflow, the green 'CTI Product' box represents:", "opts": ["A new sandbox verdict.", "A technical malware analysis report.", "Enriched indicators ready for the IoC lifecycle's Deploy stage.", "A threat actor profile from Week 3."], "ans": 2, "ansText": "Correct: C \u2014 The workflow ends with enriched indicators pushed to the SIEM watchlist (Week 5 Deploy). Trap: the technical report is an input in CTI, not the deliverable."}, {"part": "Part 4 \u00b7 Merged Workflow", "n": "Q2", "type": "tf", "label": "Q2 \u00b7 True or False", "tag": "BINARY", "q": "In the CTI role, the analyst typically runs both static and dynamic analysis themselves on every sample.", "ans": false, "ansText": "Answer: FALSE \u2014 The CTI analyst most often CONSUMES a malware analyst's or sandbox's output, then correlates, prioritizes, and disseminates it. This is the most common role confusion."}, {"part": "Part 4 \u00b7 Merged Workflow", "n": "Q3", "type": "mcq", "label": "Q3 \u00b7 Multiple Choice (MCQ)", "tag": "SINGLE ANSWER", "q": "In the SOC mini-case, what changes between Week 5's firewall-log worked example and Week 6's sandbox-report worked example?", "opts": ["The SIEM watchlist format.", "The escalation pattern.", "The source of the indicators (firewall log \u2192 sandbox report).", "The indicator taxonomy used."], "ans": 2, "ansText": "Correct: C \u2014 Only the source changes. The watchlist format, escalation pattern, and Week 5 taxonomy carry over unchanged."}, {"part": "Cumulative \u00b7 Open-Ended", "n": "Review Q1", "type": "sa", "label": "Review Q1 \u00b7 Short Answer", "tag": "OPEN-ENDED", "q": "Why is malware analysis framed as a MEANS in CTI, not an END?", "ansText": "MODEL ANSWER (from the Week 6 summary; the PDF gives none) \u00b7 Its value lies in what it produces for other work: indicators and enrichment that can be correlated, prioritized, and shared. The analysis itself is not the deliverable."}, {"part": "Cumulative \u00b7 Open-Ended", "n": "Review Q2", "type": "sa", "label": "Review Q2 \u00b7 Short Answer", "tag": "OPEN-ENDED", "q": "Where in the Week 1 lifecycle do static and dynamic analysis outputs enter the pipeline?", "ansText": "MODEL ANSWER (from the Week 6 summary; the PDF gives none) \u00b7 At the Processing and Analysis phases, where raw data becomes information and then intelligence; not at Collection, because the CTI analyst usually receives the output."}, {"part": "Cumulative \u00b7 Open-Ended", "n": "Review Q3", "type": "sa", "label": "Review Q3 \u00b7 Short Answer", "tag": "OPEN-ENDED", "q": "Which Week 5 indicator type does a file SHA-256 map to, and why?", "ansText": "MODEL ANSWER (from the Week 6 summary; the PDF gives none) \u00b7 A computed indicator, because the hash is derived from the sample's bytes rather than observed as a string or address."}, {"part": "Cumulative \u00b7 Open-Ended", "n": "Review Q4", "type": "sa", "label": "Review Q4 \u00b7 Short Answer", "tag": "OPEN-ENDED", "q": "Which Week 4 concept does a sandbox verdict map to, and why?", "ansText": "MODEL ANSWER (from the Week 6 summary; the PDF gives none) \u00b7 The Level 2 threat data feed. The verdict and its artifacts form the feed; the individual indicators it yields are Level 1."}, {"part": "Cumulative \u00b7 Open-Ended", "n": "Review Q5", "type": "sa", "label": "Review Q5 \u00b7 Short Answer", "tag": "OPEN-ENDED", "q": "What is the role shift between the standalone Malware Analysis course and CTI?", "ansText": "MODEL ANSWER (from the Week 6 summary; the PDF gives none) \u00b7 The student moves from running the analysis to consuming it, correlating and disseminating results without re-running the tools."}, {"part": "Cumulative \u00b7 Open-Ended", "n": "Review Q6", "type": "sa", "label": "Review Q6 \u00b7 Short Answer", "tag": "OPEN-ENDED", "q": "Why does a high-entropy PE section drive an enrichment FLAG, not a verdict?", "ansText": "MODEL ANSWER (from the Week 6 summary; the PDF gives none) \u00b7 Packing is one explanation, but benign software such as UPX-packed programs also has high entropy. The flag tells the analyst where to look; a verdict requires corroboration."}, {"part": "Cumulative \u00b7 Open-Ended", "n": "Review Q7", "type": "sa", "label": "Review Q7 \u00b7 Short Answer", "tag": "OPEN-ENDED", "q": "Why is a registry-persistence sequence an IOA, not an IoC?", "ansText": "MODEL ANSWER (from the Week 6 summary; the PDF gives none) \u00b7 It is an observed pattern of behavior that asserts an attack is occurring. An IoC points to a specific artifact; a sequence of actions does not."}, {"part": "Cumulative \u00b7 Open-Ended", "n": "Review Q8", "type": "sa", "label": "Review Q8 \u00b7 Short Answer", "tag": "OPEN-ENDED", "q": "What changes between Week 5's firewall-log worked example and Week 6's sandbox-report worked example?", "ansText": "MODEL ANSWER (from the Week 6 summary; the PDF gives none) \u00b7 Only the source of the indicators. The watchlist format, escalation pattern, and taxonomy stay the same."}, {"part": "Cumulative \u00b7 Open-Ended", "n": "Review Q9", "type": "sa", "label": "Review Q9 \u00b7 Short Answer", "tag": "OPEN-ENDED", "q": "Why does Scenario 1's negligible random-collision probability NOT justify relying on MD5?", "ansText": "MODEL ANSWER (from the Week 6 summary; the PDF gives none) \u00b7 The concern is deliberate collisions. An attacker who can craft a file matching a known-bad MD5 could evade hash-based detection or poison a database; random-collision math does not model that."}, {"part": "Cumulative \u00b7 Open-Ended", "n": "Review Q10", "type": "sa", "label": "Review Q10 \u00b7 Short Answer", "tag": "OPEN-ENDED", "q": "Why does Scenario 2's 26.1% detection rate argue against single-verdict reliance for IOA classification?", "ansText": "MODEL ANSWER (from the Week 6 summary; the PDF gives none) \u00b7 About 74% of truly malicious samples would not be flagged by that rule, so a single verdict is a weak basis for an IOA. Static output, actor TTP profiles, and campaign-level evidence should corroborate it."}, {"part": "Cumulative \u00b7 MCQ", "n": "MCQ 1", "type": "mcq", "label": "MCQ 1 \u00b7 Multiple Choice (MCQ)", "tag": "SINGLE ANSWER", "q": "Static analysis output that maps to the Week 5 'computed indicator' type is a:", "opts": ["URL", "File hash", "Reg key", "Proc name"], "ans": 1, "ansText": "Correct: B \u2014 A file hash is derived from the sample's bytes."}, {"part": "Cumulative \u00b7 MCQ", "n": "MCQ 2", "type": "mcq", "label": "MCQ 2 \u00b7 Multiple Choice (MCQ)", "tag": "SINGLE ANSWER", "q": "In the Week 4 level model, a sandbox verdict is a:", "opts": ["L1 atomic", "L2 feed", "L3 product", "W5 enrich"], "ans": 1, "ansText": "Correct: B \u2014 The verdict + artifacts form a Level 2 threat data feed."}, {"part": "Cumulative \u00b7 MCQ", "n": "MCQ 3", "type": "mcq", "label": "MCQ 3 \u00b7 Multiple Choice (MCQ)", "tag": "SINGLE ANSWER", "q": "A process-injection sequence observed during dynamic analysis is best classified as:", "opts": ["Atomic", "Computed", "IOA", "Actor"], "ans": 2, "ansText": "Correct: C \u2014 A behavior sequence is an Indicator of Attack."}, {"part": "Cumulative \u00b7 MCQ", "n": "MCQ 4", "type": "sa", "label": "MCQ 4 \u00b7 Short Answer", "tag": "INCOMPLETE IN SOURCE", "q": "Scenario 2: the sandbox catches ~26.1%. The CTI \u2026 (stem cut off in the PDF)", "ansText": "INCOMPLETE IN SOURCE. The stem, options and answer were cut off. From the Week 6 summary, the point of Scenario 2 is that a \u22652-of-5 sandbox rule catches only about 26.1% of truly malicious samples (about 74% missed), so a single sandbox verdict is a weak basis for an IOA classification and should be corroborated."}, {"part": "Cumulative \u00b7 True / False", "n": "T/F 1", "type": "tf", "label": "T/F 1 \u00b7 True or False", "tag": "BINARY", "q": "In CTI, the analyst typically runs both static and dynamic analysis on every sample.", "ans": false, "ansText": "Answer: FALSE \u2014 The CTI analyst mostly consumes analysis output."}, {"part": "Cumulative \u00b7 True / False", "n": "T/F 2", "type": "tf", "label": "T/F 2 \u00b7 True or False", "tag": "BINARY", "q": "Sandbox output is raw data, not intelligence.", "ans": false, "ansText": "Answer: FALSE \u2014 It is a Level 2 feed source and becomes intelligence once enriched and correlated."}, {"part": "Cumulative \u00b7 True / False", "n": "T/F 3", "type": "tf", "label": "T/F 3 \u00b7 True or False", "tag": "BINARY", "q": "MD5 is unsafe for CTI use because of random collision probability.", "ans": false, "ansText": "Answer: FALSE \u2014 Random collision probability is negligible (about 1.5 \u00d7 10\u207b\u00b2\u2077 for 10\u2076 hashes). The real risk is deliberate chosen-prefix collisions."}, {"part": "Cumulative \u00b7 True / False", "n": "T/F 4", "type": "tf", "label": "T/F 4 \u00b7 True or False", "tag": "BINARY", "q": "A high-entropy PE section is sufficient evidence to classify a sample as malicious.", "ans": false, "ansText": "Answer: FALSE \u2014 High entropy is an enrichment flag, not a verdict."}, {"part": "Cumulative \u00b7 True / False", "n": "T/F 5", "type": "tf", "label": "T/F 5 \u00b7 True or False", "tag": "BINARY", "q": "Week 6 re-teaches malware analysis technique from scratch.", "ans": false, "ansText": "Answer: FALSE \u2014 Week 6 is a recap + integration week."}];
+const r=document.documentElement,s=localStorage.getItem('theme');
+if(s)r.setAttribute('data-theme',s);
+document.getElementById('theme').onclick=()=>{const n=r.getAttribute('data-theme')==='dark'?'light':'dark';r.setAttribute('data-theme',n);localStorage.setItem('theme',n)};
+const app=document.getElementById('app'),bar=document.getElementById('bar'),timer=document.getElementById('timer');
+const L='ABCD';let tick=null;
+const esc=t=>t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+function head(q){return `<div class="meta"><span>${esc(q.label)}</span><span>${esc(q.tag)}</span></div><div class="qt">${esc(q.q)}</div>`}
+function study(){
+  clearInterval(tick);timer.classList.add('hide');bar.innerHTML='';
+  let h='',part='';
+  D.forEach(q=>{
+    if(q.part!==part){part=q.part;h+=`<h2 class="part">${esc(part)}</h2>`}
+    h+=`<div class="q ${q.type}">${head(q)}`;
+    if(q.type==='mcq')h+=q.opts.map((o,i)=>`<div class="opt ${i===q.ans?'right':''}"><b>${L[i]}.</b><span>${esc(o)}</span></div>`).join('');
+    h+=`<div class="ans">${esc(q.ansText)}</div></div>`;
+  });
+  app.innerHTML=h;
+}
+let ex=[];
+function exam(){
+  clearInterval(tick);
+  ex=D.filter(q=>q.type==='mcq'||q.type==='tf');bar.innerHTML='';
+  let h=`<div id="result"></div>`;
+  ex.forEach((q,k)=>{
+    h+=`<div class="q ${q.type}" id="e${k}"><div class="meta"><span>Question ${k+1} of ${ex.length}</span><span>${q.type==='mcq'?'Multiple Choice':'True or False'}</span></div><div class="qt">${esc(q.q)}</div>`;
+    const opts=q.type==='mcq'?q.opts.map((o,i)=>[i,L[i]+'. '+o]):[[1,'True'],[0,'False']];
+    h+=opts.map(([v,t])=>`<label class="opt"><input type="radio" name="q${k}" value="${v}"><span>${esc(t)}</span></label>`).join('');
+    h+=`<div class="ans hide"></div></div>`;
+  });
+  h+=`<div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn primary" id="sub">Submit Exam</button><button class="btn" id="rst">Restart</button></div>`;
+  app.innerHTML=h;
+  let t=0;timer.classList.remove('hide');timer.textContent='00:00';
+  tick=setInterval(()=>{t++;timer.textContent=String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0')},1000);
+  document.getElementById('rst').onclick=exam;
+  document.getElementById('sub').onclick=()=>{
+    clearInterval(tick);let sc=0;
+    ex.forEach((q,k)=>{
+      const box=document.getElementById('e'+k);
+      const c=box.querySelector('input:checked');
+      const correct=q.type==='mcq'?q.ans:(q.ans?1:0);
+      const val=c?+c.value:null;
+      if(val===correct)sc++;
+      box.querySelectorAll('label.opt').forEach(l=>{
+        const v=+l.querySelector('input').value;
+        if(v===correct)l.classList.add('right');
+        else if(v===val)l.classList.add('wrong');
+        l.querySelector('input').disabled=true;
+      });
+      const a=box.querySelector('.ans');a.classList.remove('hide');
+      a.innerHTML=(val===null?'<b>Not answered.</b> ':val===correct?'<b>Correct.</b> ':'<b>Incorrect.</b> ')+esc(q.ansText);
+    });
+    const res=document.getElementById('result');
+    res.style.display='block';
+    res.textContent=`Score: ${sc} / ${ex.length} (${Math.round(sc/ex.length*100)}%) · Time ${timer.textContent}`;
+    document.getElementById('sub').disabled=true;
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+}
+const bS=document.getElementById('bStudy'),bE=document.getElementById('bExam');
+bS.onclick=()=>{bS.classList.add('on');bE.classList.remove('on');study()};
+bE.onclick=()=>{bE.classList.add('on');bS.classList.remove('on');exam()};
+study();
+</script>
+</body>
+</html>

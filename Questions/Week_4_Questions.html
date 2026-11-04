@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Week 4 - CTI Questions &amp; Exam Mode</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600;800&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#090d16;--card:#111827;--hover:#162032;--text:#f8fafc;--muted:#94a3b8;--border:rgba(255,255,255,.1);--ok:#10b981;--bad:#f43f5e}
+[data-theme="light"]{--bg:#f8fafc;--card:#fff;--hover:#f1f5f9;--text:#0f172a;--muted:#475569;--border:rgba(0,0,0,.1)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',system-ui,sans-serif;line-height:1.6;min-height:100vh;overflow-x:hidden}
+header{max-width:900px;margin:0 auto;padding:56px 24px 16px;position:relative}
+.badge{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;padding:4px 12px;border-radius:20px;background:rgba(16,185,129,.15);color:#10b981;border:1px solid rgba(16,185,129,.3)}
+h1{font-size:clamp(26px,6vw,38px);font-weight:800;margin:14px 0 8px;line-height:1.2}
+h1 span{background:linear-gradient(135deg,#10b981,#06b6d4);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.sub{color:var(--muted)}
+.top{position:absolute;top:20px;right:24px;display:flex;gap:8px}
+.top button,.top a{width:44px;height:44px;background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:10px;cursor:pointer;font-size:18px;text-decoration:none;display:flex;align-items:center;justify-content:center}
+.modes{max-width:900px;margin:0 auto;padding:8px 24px;display:flex;gap:10px;flex-wrap:wrap}
+.btn{font:inherit;font-weight:700;font-size:14px;padding:10px 18px;border-radius:10px;border:1px solid var(--border);background:var(--card);color:var(--text);cursor:pointer}
+.btn.on,.btn.primary{background:#10b981;color:#04130c;border-color:#10b981}
+main{max-width:900px;margin:0 auto;padding:8px 24px 56px}
+h2.part{font-family:'JetBrains Mono',monospace;font-size:13px;color:#10b981;text-transform:uppercase;letter-spacing:1px;margin:28px 0 10px}
+.q{background:var(--card);border:1px solid var(--border);border-top:3px solid var(--c,#10b981);border-radius:16px;padding:20px;margin-bottom:16px}
+.mcq{--c:#3b82f6}.tf{--c:#a855f7}.sa{--c:#f59e0b}
+.meta{display:flex;justify-content:space-between;gap:8px;flex-wrap:wrap;font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:800;color:var(--c);margin-bottom:8px}
+.qt{font-weight:600;margin-bottom:12px;overflow-wrap:anywhere}
+.opt{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;border:1px solid var(--border);border-radius:10px;margin-bottom:8px;cursor:pointer;background:var(--hover)}
+.opt input{margin-top:5px}
+.opt.right{border-color:var(--ok);background:rgba(16,185,129,.15)}
+.opt.wrong{border-color:var(--bad);background:rgba(244,63,94,.15)}
+.ans{margin-top:12px;padding:12px 14px;border-left:3px solid var(--ok);background:rgba(16,185,129,.08);border-radius:8px;font-size:14px;white-space:pre-line}
+#bar{max-width:900px;margin:0 auto;padding:0 24px 8px}
+#result{display:none;background:var(--card);border:1px solid var(--border);border-radius:16px;padding:20px;margin-bottom:16px;font-weight:700}
+.hide{display:none!important}
+.timer{font-family:'JetBrains Mono',monospace;color:var(--muted);align-self:center}
+footer{text-align:center;padding:24px 16px;color:var(--muted);font-size:13px;border-top:1px solid var(--border)}
+@media(max-width:600px){header{padding:72px 16px 12px}.modes,main,#bar{padding-left:16px;padding-right:16px}.top{top:16px;right:16px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="top"><a href="index.html" aria-label="Home">&#8962;</a><button id="theme" aria-label="Toggle theme">&#9788;</button></div>
+  <span class="badge">Week 4 &middot; CCY4403</span>
+  <h1><span>Week 4</span> Questions</h1>
+  <p class="sub">Collecting Cyber Threat Information. Study Mode shows every question with its answer. Exam Mode quizzes you on the MCQ and True/False questions.</p>
+</header>
+<div class="modes">
+  <button class="btn on" id="bStudy">Study Mode</button>
+  <button class="btn" id="bExam">Exam Mode (MCQ + T/F)</button>
+  <span class="timer hide" id="timer"></span>
+</div>
+<div id="bar"></div>
+<main id="app"></main>
+<footer>&copy; Zaneso &mdash; Cyber Threat Intelligence Course Notes</footer>
+<script>
+const D=[{"part": "Part 1 \u00b7 Introduction", "n": "Q1", "type": "mcq", "label": "Q1 \u00b7 Multiple Choice (MCQ)", "tag": "SINGLE ANSWER", "q": "Which statement BEST captures the relationship between information and intelligence?", "opts": ["Information and intelligence are interchangeable terms for raw security data.", "Information is the raw material; intelligence is produced from it through analysis.", "Intelligence is the raw material; information is the analyzed output."], "ans": 1, "ansText": "Correct: B \u2014 Information is the input; intelligence is the analyzed output that supports decisions. Trap: picking (a); the terms are not synonyms."}, {"part": "Part 1 \u00b7 Introduction", "n": "Q2", "type": "tf", "label": "Q2 \u00b7 True or False", "tag": "BINARY", "q": "A higher level of the three-level model takes LONGER to produce but degrades SLOWER than a lower level.", "ans": true, "ansText": "Answer: TRUE \u2014 Strategic CTI (Level 3) takes weeks to months to produce but informs posture for years; IOCs (Level 1) are produced in minutes but decay within days."}, {"part": "Part 1 \u00b7 Introduction", "n": "Q3", "type": "mcq", "label": "Q3 \u00b7 Multiple Choice (MCQ)", "tag": "SINGLE ANSWER", "q": "Which level of the three-level model would a SOC analyst MOST directly consult when triaging a single suspicious IP hit?", "opts": ["Level 3 \u2014 Strategic CTI", "Level 2 \u2014 Threat Data Feeds", "Level 1 \u2014 Threat Indicators"], "ans": 2, "ansText": "Correct: C \u2014 A single suspicious IP is an atomic indicator, Level 1. Level 2 enters when correlation across indicators is needed."}, {"part": "Part 2 \u00b7 Threat Indicators (Level 1)", "n": "Q1", "type": "mcq", "label": "Q1 \u00b7 Multiple Choice (MCQ)", "tag": "SINGLE ANSWER", "q": "A researcher obtains a malware sample from a honeypot and computes its MD5 hash. What is the BEST description of this hash?", "opts": ["A cryptographic proof that the file is malicious.", "A fingerprint of the file's byte sequence, useful for detecting the SAME file across hosts.", "A guaranteed-unique identifier that no attacker can ever evade."], "ans": 1, "ansText": "Correct: B \u2014 A hash is a fingerprint for sameness; any byte change produces a different hash, so attackers can evade by recompiling or repacking."}, {"part": "Part 2 \u00b7 Threat Indicators (Level 1)", "n": "Q2", "type": "tf", "label": "Q2 \u00b7 True or False", "tag": "BINARY", "q": "A C2 (command-and-control) server managing a botnet would be classified as a HIGH-RISK reputation indicator on Level 1.", "ans": true, "ansText": "Answer: TRUE \u2014 C2 servers are explicitly listed as a high-risk reputation indicator. The IP/domain is Level 1; the actor behind it is Level 3."}, {"part": "Part 2 \u00b7 Threat Indicators (Level 1)", "n": "Q3", "type": "mcq", "label": "Q3 \u00b7 Multiple Choice (MCQ)", "tag": "SINGLE ANSWER", "q": "An organization with NO in-house threat research team wants indicator feeds. Which combination BEST matches the five industry source categories described?", "opts": ["AV vendor + CTI firm + independent lab + open-source/RBL + government/industry sharing group", "Internal honeypot + AV vendor + CTI firm + open-source", "Government sharing group + internal honeypot + AV vendor"], "ans": 0, "ansText": "Correct: A \u2014 The five categories are AV/domain reputation vendors, CTI firms, independent labs/researchers, open-source/RBL providers, and government/industry sharing groups."}, {"part": "Part 3 \u00b7 Threat Data Feeds (Level 2)", "n": "Q1", "type": "mcq", "label": "Q1 \u00b7 Multiple Choice (MCQ)", "tag": "SINGLE ANSWER", "q": "A threat data feed is BEST described as:", "opts": ["A single atomic indicator shared between organizations.", "A correlation and analysis of threat indicators, helping teams identify attack PATTERNS.", "A strategic briefing about adversary motivations and TTPs."], "ans": 1, "ansText": "Correct: B \u2014 Feeds correlate indicators and sit between Level 1 atomic IOCs and Level 3 strategic CTI. (a) describes Level 1; (c) describes Level 3."}, {"part": "Part 3 \u00b7 Threat Data Feeds (Level 2)", "n": "Q2", "type": "tf", "label": "Q2 \u00b7 True or False", "tag": "BINARY", "q": "This week teaches students how to PERFORM static and dynamic malware analysis.", "ans": false, "ansText": "Answer: FALSE \u2014 That technique is reserved for Week 6. This week only notes that sandbox OUTPUT feeds Level 2."}, {"part": "Part 3 \u00b7 Threat Data Feeds (Level 2)", "n": "Q3", "type": "sa", "label": "Q3 \u00b7 Short Answer", "tag": "INCOMPLETE IN SOURCE", "q": "Which of the following is NOT a typical content of vendor and consulting-firm reports and surveys?", "ansText": "The answer options were cut off in the PDF, so this item is study-only. Per the Week 4 summary, Level 2 reports and surveys cover statistics (what is happening), reports (why it is happening) and surveys (what peers are doing)."}, {"part": "Part 4 \u00b7 Strategic CTI (Level 3)", "n": "Q1", "type": "mcq", "label": "Q1 \u00b7 Multiple Choice (MCQ)", "tag": "SINGLE ANSWER", "q": "Strategic CTI is BEST defined as:", "opts": ["Information about ANY generic threat landscape, regardless of who is targeted.", "Information about the SPECIFIC adversaries targeting an enterprise and the dangers they pose in the near future.", "A list of file hashes associated with a recent campaign."], "ans": 1, "ansText": "Correct: B \u2014 Strategic CTI is specific to the enterprise and forward-looking. (a) is generic threat reporting."}, {"part": "Part 4 \u00b7 Strategic CTI (Level 3)", "n": "Q2", "type": "tf", "label": "Q2 \u00b7 True or False", "tag": "BINARY", "q": "Cybercriminals typically show the WIDEST range of motivations of any actor category.", "ans": false, "ansText": "Answer: FALSE \u2014 Cybercriminals are usually profit-motivated. Hacktivists show the widest motivation range. Criminals are diverse in target, not in motive."}, {"part": "Part 4 \u00b7 Strategic CTI (Level 3)", "n": "Q3", "type": "sa", "label": "Q3 \u00b7 Short Answer", "tag": "INCOMPLETE IN SOURCE", "q": "Which is NOT one of the five methods researchers use to deduce TTPs?", "ansText": "The answer options were cut off in the PDF, so this item is study-only. Per the Week 4 summary, the five methods are: monitor underground forums and social media; track discussion of exploits and tools; observe purchases or offers in marketplaces; analyze malware behavior; monitor the sale or exchange of stolen assets."}, {"part": "Part 5 \u00b7 Domain Collection", "n": "Q1", "type": "mcq", "label": "Q1 \u00b7 Multiple Choice (MCQ)", "tag": "SINGLE ANSWER", "q": "WHOIS data PRIMARILY reveals:", "opts": ["Domain owner, registrar, and creation/expiration dates.", "Live HTTP headers and active website technologies.", "Multi-engine antivirus scan results for a domain."], "ans": 0, "ansText": "Correct: A \u2014 WHOIS queries domain registration databases. (b) is urlscan.io; (c) is VirusTotal."}, {"part": "Part 5 \u00b7 Domain Collection", "n": "Q2", "type": "tf", "label": "Q2 \u00b7 True or False", "tag": "BINARY", "q": "WHOIS data alone is sufficient to attribute a domain to a specific attacker.", "ans": false, "ansText": "Answer: FALSE \u2014 Registrant data can be privacy-shielded, faked, or stale. Attribute via triangulation across multiple sources."}, {"part": "Part 5 \u00b7 Domain Collection", "n": "Q3", "type": "mcq", "label": "Q3 \u00b7 Multiple Choice (MCQ)", "tag": "SINGLE ANSWER", "q": "Which tool BEST visualizes the RELATIONSHIPS between domains, IPs, and entities using OSINT data sources?", "opts": ["Shodan", "Lookyloo", "Maltego", "ICANN Lookup"], "ans": 2, "ansText": "Correct: C \u2014 Maltego is the OSINT relationship visualization tool. (Options reconstructed from the cumulative MCQ 2, because this question was cut off in the PDF.)"}, {"part": "Review Questions", "n": "Review Q1", "type": "sa", "label": "Review Q1 \u00b7 Short Answer", "tag": "OPEN-ENDED", "q": "Define a threat indicator (IOC) and explain why file hashes are considered a brittle detection mechanism.", "ansText": "No model answer is given in the PDF. Check the Week 4 summary notes."}, {"part": "Review Questions", "n": "Review Q2", "type": "sa", "label": "Review Q2 \u00b7 Short Answer", "tag": "OPEN-ENDED", "q": "List five high-risk reputation indicators that would push a domain or IP toward a \"malicious\" reputation score.", "ansText": "No model answer is given in the PDF. Check the Week 4 summary notes."}, {"part": "Review Questions", "n": "Review Q3", "type": "sa", "label": "Review Q3 \u00b7 Short Answer", "tag": "OPEN-ENDED", "q": "Describe the honeypot-to-signature workflow and explain where Week 6 picks up from this week's coverage.", "ansText": "No model answer is given in the PDF. Check the Week 4 summary notes."}, {"part": "Review Questions", "n": "Review Q4", "type": "sa", "label": "Review Q4 \u00b7 Short Answer", "tag": "OPEN-ENDED", "q": "Name the five industry source categories for malware and reputation feeds, with one example each.", "ansText": "No model answer is given in the PDF. Check the Week 4 summary notes."}, {"part": "Review Questions", "n": "Review Q5", "type": "sa", "label": "Review Q5 \u00b7 Short Answer", "tag": "OPEN-ENDED", "q": "Differentiate a threat data feed (Level 2) from a threat indicator (Level 1) and from strategic CTI (Level 3).", "ansText": "No model answer is given in the PDF. Check the Week 4 summary notes."}, {"part": "Review Questions", "n": "Review Q6", "type": "sa", "label": "Review Q6 \u00b7 Short Answer", "tag": "OPEN-ENDED", "q": "List five observable sandbox behaviours that dynamic analysis would flag on a malware sample.", "ansText": "No model answer is given in the PDF. Check the Week 4 summary notes."}, {"part": "Review Questions", "n": "Review Q7", "type": "sa", "label": "Review Q7 \u00b7 Short Answer", "tag": "OPEN-ENDED", "q": "Describe the underground economy ecosystem and name the three categories of activity that flow through forums.", "ansText": "No model answer is given in the PDF. Check the Week 4 summary notes."}, {"part": "Review Questions", "n": "Review Q8", "type": "sa", "label": "Review Q8 \u00b7 Short Answer", "tag": "OPEN-ENDED", "q": "Contrast cybercriminal, espionage, and hacktivist motivations \u2014 give one example target data type for each.", "ansText": "No model answer is given in the PDF. Check the Week 4 summary notes."}, {"part": "Review Questions", "n": "Review Q9", "type": "sa", "label": "Review Q9 \u00b7 Short Answer", "tag": "OPEN-ENDED", "q": "List the five methods researchers use to deduce adversary TTPs and explain why triangulation is necessary.", "ansText": "No model answer is given in the PDF. Check the Week 4 summary notes."}, {"part": "Review Questions", "n": "Review Q10", "type": "sa", "label": "Review Q10 \u00b7 Short Answer", "tag": "OPEN-ENDED", "q": "State the five best practices for collecting CTI via domains, and give one operational reason each matters.", "ansText": "No model answer is given in the PDF. Check the Week 4 summary notes."}, {"part": "Cumulative \u00b7 MCQ", "n": "MCQ 1", "type": "mcq", "label": "MCQ 1 \u00b7 Multiple Choice (MCQ)", "tag": "SINGLE ANSWER", "q": "Which algorithm is used to create a malware file hash fingerprint?", "opts": ["RSA", "MD5 or SHA-1", "AES", "HMAC-SHA256"], "ans": 1, "ansText": "Correct: B \u2014 MD5 and SHA-1 are the standard hash algorithms for IOC fingerprints."}, {"part": "Cumulative \u00b7 MCQ", "n": "MCQ 2", "type": "mcq", "label": "MCQ 2 \u00b7 Multiple Choice (MCQ)", "tag": "SINGLE ANSWER", "q": "Which tool BEST visualizes OSINT relationships between domains, IPs, and entities?", "opts": ["Shodan", "Lookyloo", "Maltego", "ICANN Lookup"], "ans": 2, "ansText": "Correct: C \u2014 Maltego is the OSINT visualization tool."}, {"part": "Cumulative \u00b7 MCQ", "n": "MCQ 3", "type": "mcq", "label": "MCQ 3 \u00b7 Multiple Choice (MCQ)", "tag": "SINGLE ANSWER", "q": "Which level of the three-level model would inform a multi-year defensive investment plan?", "opts": ["Level 1 \u2014 Threat Indicators", "Level 2 \u2014 Threat Data Feeds", "Level 3 \u2014 Strategic CTI"], "ans": 2, "ansText": "Correct: C \u2014 Level 3 has a months-to-years horizon. (The PDF's answer text is garbled; the letter c is clear.)"}, {"part": "Cumulative \u00b7 MCQ", "n": "MCQ 4", "type": "mcq", "label": "MCQ 4 \u00b7 Multiple Choice (MCQ)", "tag": "SINGLE ANSWER", "q": "A SOC analyst sees a single IOC feed 'hit' on an IP. Base rate is 5%, TPR 0.9, FPR 0.02. What is P(Malicious | Hit) approximately?", "opts": ["~95%", "~90%", "~70%", "~50%"], "ans": 2, "ansText": "Correct: C \u2014 Bayes: 0.045 / (0.045 + 0.019) = 0.703, about 70.3%."}, {"part": "Cumulative \u00b7 MCQ", "n": "MCQ 5", "type": "mcq", "label": "MCQ 5 \u00b7 Multiple Choice (MCQ)", "tag": "SINGLE ANSWER", "q": "Which of these is NOT one of the five best practices for collecting CTI via domains?", "opts": ["Use multiple sources", "Verify information", "Stay up-to-date", "Collect everything available"], "ans": 3, "ansText": "Correct: D \u2014 Best practice is to focus on RELEVANCE, not to collect everything."}, {"part": "Cumulative \u00b7 True / False", "n": "T/F 1", "type": "tf", "label": "T/F 1 \u00b7 True or False", "tag": "BINARY", "q": "WHOIS data alone is sufficient to attribute a domain to a specific attacker.", "ans": false, "ansText": "Answer: FALSE \u2014 Records may be private, false, or outdated."}, {"part": "Cumulative \u00b7 True / False", "n": "T/F 2", "type": "tf", "label": "T/F 2 \u00b7 True or False", "tag": "BINARY", "q": "Strategic CTI is information about the specific adversaries targeting an enterprise.", "ans": true, "ansText": "Answer: TRUE \u2014 Strategic CTI is specific and forward-looking."}, {"part": "Cumulative \u00b7 True / False", "n": "T/F 3", "type": "tf", "label": "T/F 3 \u00b7 True or False", "tag": "BINARY", "q": "This week teaches the full technique of static and dynamic malware analysis.", "ans": false, "ansText": "Answer: FALSE \u2014 That is Week 6."}, {"part": "Cumulative \u00b7 True / False", "n": "T/F 4", "type": "tf", "label": "T/F 4 \u00b7 True or False", "tag": "BINARY", "q": "Honeypots simulate web servers, email servers, and user activity to collect files and emails encountered in normal operations.", "ans": true, "ansText": "Answer: TRUE \u2014 Honeypots are decoys that attract and record malicious activity."}, {"part": "Cumulative \u00b7 True / False", "n": "T/F 5", "type": "tf", "label": "T/F 5 \u00b7 True or False", "tag": "BINARY", "q": "A higher level of the three-level model takes LONGER to produce but degrades SLOWER.", "ans": true, "ansText": "Answer: TRUE \u2014 Higher levels are slower to produce but longer-lived."}];
+const r=document.documentElement,s=localStorage.getItem('theme');
+if(s)r.setAttribute('data-theme',s);
+document.getElementById('theme').onclick=()=>{const n=r.getAttribute('data-theme')==='dark'?'light':'dark';r.setAttribute('data-theme',n);localStorage.setItem('theme',n)};
+const app=document.getElementById('app'),bar=document.getElementById('bar'),timer=document.getElementById('timer');
+const L='ABCD';let tick=null;
+const esc=t=>t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+function head(q){return `<div class="meta"><span>${esc(q.label)}</span><span>${esc(q.tag)}</span></div><div class="qt">${esc(q.q)}</div>`}
+function study(){
+  clearInterval(tick);timer.classList.add('hide');bar.innerHTML='';
+  let h='',part='';
+  D.forEach(q=>{
+    if(q.part!==part){part=q.part;h+=`<h2 class="part">${esc(part)}</h2>`}
+    h+=`<div class="q ${q.type}">${head(q)}`;
+    if(q.type==='mcq')h+=q.opts.map((o,i)=>`<div class="opt ${i===q.ans?'right':''}"><b>${L[i]}.</b><span>${esc(o)}</span></div>`).join('');
+    h+=`<div class="ans">${esc(q.ansText)}</div></div>`;
+  });
+  app.innerHTML=h;
+}
+let ex=[];
+function exam(){
+  clearInterval(tick);
+  ex=D.filter(q=>q.type==='mcq'||q.type==='tf');bar.innerHTML='';
+  let h=`<div id="result"></div>`;
+  ex.forEach((q,k)=>{
+    h+=`<div class="q ${q.type}" id="e${k}"><div class="meta"><span>Question ${k+1} of ${ex.length}</span><span>${q.type==='mcq'?'Multiple Choice':'True or False'}</span></div><div class="qt">${esc(q.q)}</div>`;
+    const opts=q.type==='mcq'?q.opts.map((o,i)=>[i,L[i]+'. '+o]):[[1,'True'],[0,'False']];
+    h+=opts.map(([v,t])=>`<label class="opt"><input type="radio" name="q${k}" value="${v}"><span>${esc(t)}</span></label>`).join('');
+    h+=`<div class="ans hide"></div></div>`;
+  });
+  h+=`<div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn primary" id="sub">Submit Exam</button><button class="btn" id="rst">Restart</button></div>`;
+  app.innerHTML=h;
+  let t=0;timer.classList.remove('hide');timer.textContent='00:00';
+  tick=setInterval(()=>{t++;timer.textContent=String(Math.floor(t/60)).padStart(2,'0')+':'+String(t%60).padStart(2,'0')},1000);
+  document.getElementById('rst').onclick=exam;
+  document.getElementById('sub').onclick=()=>{
+    clearInterval(tick);let sc=0;
+    ex.forEach((q,k)=>{
+      const box=document.getElementById('e'+k);
+      const c=box.querySelector('input:checked');
+      const correct=q.type==='mcq'?q.ans:(q.ans?1:0);
+      const val=c?+c.value:null;
+      if(val===correct)sc++;
+      box.querySelectorAll('label.opt').forEach(l=>{
+        const v=+l.querySelector('input').value;
+        if(v===correct)l.classList.add('right');
+        else if(v===val)l.classList.add('wrong');
+        l.querySelector('input').disabled=true;
+      });
+      const a=box.querySelector('.ans');a.classList.remove('hide');
+      a.innerHTML=(val===null?'<b>Not answered.</b> ':val===correct?'<b>Correct.</b> ':'<b>Incorrect.</b> ')+esc(q.ansText);
+    });
+    const res=document.getElementById('result');
+    res.style.display='block';
+    res.textContent=`Score: ${sc} / ${ex.length} (${Math.round(sc/ex.length*100)}%) · Time ${timer.textContent}`;
+    document.getElementById('sub').disabled=true;
+    window.scrollTo({top:0,behavior:'smooth'});
+  };
+}
+const bS=document.getElementById('bStudy'),bE=document.getElementById('bExam');
+bS.onclick=()=>{bS.classList.add('on');bE.classList.remove('on');study()};
+bE.onclick=()=>{bE.classList.add('on');bS.classList.remove('on');exam()};
+study();
+</script>
+</body>
+</html>
