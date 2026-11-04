@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>Week 4: Collecting Cyber Threat Information — Lecture Summary &amp; Revision Guide</title>
+<meta name="description" content="CCY4403 Week 4: three CTI levels, indicators, threat feeds, strategic CTI, domain investigation, and quantitative exercises.">
+<script>try{var t=localStorage.getItem('theme');if(t)document.documentElement.setAttribute('data-theme',t)}catch(e){}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700;800&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg-page:#090d16;--bg-surface:#0f172a;--bg-card:#111827;--bg-hover:#162032;--bg-sidebar:#0b1120;--border:rgba(255,255,255,.1);--text:#f8fafc;--text2:#94a3b8;--text3:#64748b;--em:#10b981;--cy:#06b6d4;--pu:#a855f7;--am:#f59e0b;--ro:#f43f5e;--font:'Plus Jakarta Sans',system-ui,sans-serif;--mono:'JetBrains Mono',Menlo,Consolas,monospace;--shadow:0 10px 25px -5px rgba(0,0,0,.5)}
+[data-theme="light"]{--bg-page:#f8fafc;--bg-surface:#fff;--bg-card:#fff;--bg-hover:#f1f5f9;--bg-sidebar:#f1f5f9;--border:rgba(0,0,0,.1);--text:#0f172a;--text2:#475569;--text3:#94a3b8;--shadow:0 4px 6px -1px rgba(0,0,0,.08)}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:80px}
+body{background:var(--bg-page);color:var(--text);font:16px/1.7 var(--font);-webkit-font-smoothing:antialiased;transition:background .25s,color .25s}
+::-webkit-scrollbar{width:8px;height:8px}::-webkit-scrollbar-thumb{background:var(--border);border-radius:4px}::-webkit-scrollbar-thumb:hover{background:var(--cy)}
+a{color:var(--cy)}
+a:focus-visible,button:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--cy);outline-offset:2px}
+#bar{position:fixed;top:0;left:0;height:3px;width:0;background:linear-gradient(90deg,var(--cy),var(--pu));z-index:1000}
+.nav{position:sticky;top:0;z-index:900;background:rgba(11,17,32,.85);backdrop-filter:blur(16px);border-bottom:1px solid var(--border)}
+[data-theme="light"] .nav{background:rgba(255,255,255,.9)}
+.nav-in{max-width:1440px;margin:0 auto;padding:0 24px;height:64px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--text)}
+.brand-ic{width:36px;height:36px;border-radius:10px;display:grid;place-items:center;background:linear-gradient(135deg,var(--cy),var(--pu));color:#fff}
+.brand-t{display:block;font:800 14px var(--mono);letter-spacing:.5px}.brand-s{display:block;font-size:12px;color:var(--text2)}
+.acts{display:flex;gap:8px}
+.btn{display:inline-flex;align-items:center;gap:6px;background:var(--bg-card);color:var(--text);border:1px solid var(--border);border-radius:10px;padding:8px 12px;font:600 13px var(--font);cursor:pointer;text-decoration:none}
+.btn:hover{border-color:var(--cy)}
+kbd{font:600 11px var(--mono);border:1px solid var(--border);border-radius:5px;padding:1px 5px;color:var(--text2)}
+.layout{max-width:1440px;margin:0 auto;display:grid;grid-template-columns:300px minmax(0,1fr)}
+.sidebar{position:sticky;top:64px;height:calc(100vh - 64px);overflow-y:auto;background:var(--bg-sidebar);border-right:1px solid var(--border);padding:18px 14px}
+.sb-h{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px;font-weight:800;font-size:14px}
+.badge-n{font:700 11px var(--mono);color:var(--cy);background:rgba(6,182,212,.12);border-radius:12px;padding:2px 8px}
+.close-sb{display:none}
+.toc{list-style:none}
+.toc-link{display:flex;gap:8px;align-items:center;padding:8px 10px;border-radius:10px;text-decoration:none;color:var(--text2);font-size:14px;font-weight:600}
+.toc-link:hover,.toc-item.active>.toc-link{background:var(--bg-hover);color:var(--text)}
+.toc-item.active>.toc-link{box-shadow:inset 3px 0 var(--cy)}
+.toc-num{font:700 11px var(--mono);color:var(--cy)}
+.sub{list-style:none;margin:2px 0 6px 38px;display:none}
+.toc-item.active .sub{display:block}
+.sub a{display:block;padding:3px 8px;font-size:13px;color:var(--text3);text-decoration:none;border-left:1px solid var(--border)}
+.sub a:hover{color:var(--cy)}
+.main{padding:32px 32px 60px;min-width:0;max-width:1000px}
+.hero{position:relative;background:var(--bg-surface);border:1px solid var(--border);border-radius:20px;padding:36px;margin-bottom:28px;overflow:hidden;box-shadow:var(--shadow)}
+.hero:before{content:"";position:absolute;top:-80px;right:-80px;width:280px;height:280px;background:radial-gradient(circle,rgba(6,182,212,.25),transparent 70%)}
+.hbadge{display:inline-block;font:800 11px var(--mono);letter-spacing:.8px;text-transform:uppercase;padding:4px 12px;border-radius:20px;background:rgba(6,182,212,.14);color:var(--cy);border:1px solid rgba(6,182,212,.3);margin:0 6px 6px 0}
+.hbadge.b2{background:rgba(168,85,247,.14);color:var(--pu);border-color:rgba(168,85,247,.3)}
+.hero h1{font-size:clamp(28px,5vw,42px);line-height:1.2;letter-spacing:-.6px;margin:14px 0 8px}
+.grad{background:linear-gradient(135deg,var(--cy),var(--pu));-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.hero p.lead{color:var(--text2);max-width:720px}
+.tags{display:flex;flex-wrap:wrap;gap:8px;margin:18px 0}
+.tag{font-size:13px;font-weight:600;padding:5px 12px;border-radius:20px;background:var(--bg-card);border:1px solid var(--border);color:var(--text2)}
+.use{display:flex;gap:14px;background:var(--bg-card);border:1px solid var(--border);border-left:4px solid var(--cy);border-radius:14px;padding:16px;margin-top:8px;font-size:14px;color:var(--text2)}
+.use b{display:block;color:var(--cy);font:800 12px var(--mono);letter-spacing:1px;margin-bottom:4px}
+.card{background:var(--bg-card);border:1px solid var(--border);border-radius:20px;padding:28px;margin-bottom:28px;box-shadow:var(--shadow)}
+.card-h{display:flex;align-items:center;gap:14px;margin-bottom:18px;padding-bottom:14px;border-bottom:1px solid var(--border)}
+.num{font:800 15px var(--mono);color:#fff;background:linear-gradient(135deg,var(--cy),var(--pu));border-radius:12px;padding:8px 12px}
+.card-h h2{font-size:clamp(20px,3vw,26px);line-height:1.25;flex:1}
+.anchor{color:var(--text3);text-decoration:none;font:700 18px var(--mono)}
+h3{font-size:19px;margin:26px 0 8px}
+p{margin:10px 0;color:var(--text2)}p strong,li strong{color:var(--text)}
+ul,ol{margin:10px 0 10px 24px;color:var(--text2)}li{margin:5px 0}
+.table-responsive{overflow-x:auto;margin:14px 0;border:1px solid var(--border);border-radius:12px}
+table{border-collapse:collapse;width:100%;min-width:520px;font-size:14px}
+th{background:var(--bg-hover);color:var(--cy);text-align:left;font:800 12px var(--mono);text-transform:uppercase;letter-spacing:.5px}
+th,td{padding:10px 12px;border-bottom:1px solid var(--border);vertical-align:top;color:var(--text2)}
+td b{color:var(--text)}tr:last-child td{border-bottom:0}tbody tr:hover{background:var(--bg-hover)}
+.pill{display:inline-block;font-size:12px;font-weight:800;padding:3px 10px;border-radius:20px}
+.pill-green{background:rgba(16,185,129,.15);color:var(--em)}.pill-amber{background:rgba(245,158,11,.15);color:var(--am)}.pill-rose{background:rgba(244,63,94,.15);color:var(--ro)}.pill-cyan{background:rgba(6,182,212,.15);color:var(--cy)}.pill-purple{background:rgba(168,85,247,.15);color:var(--pu)}
+.callout{display:flex;gap:12px;border-radius:14px;padding:14px 16px;margin:16px 0;border:1px solid var(--border);border-left:4px solid var(--c)}
+.callout-principle{--c:var(--cy);background:rgba(6,182,212,.07)}.callout-warn{--c:var(--am);background:rgba(245,158,11,.07)}.callout-tip{--c:var(--em);background:rgba(16,185,129,.07)}
+.callout-badge{font:800 11px var(--mono);letter-spacing:1px;color:var(--c)}.callout-text{color:var(--text2);font-size:15px}
+.callout-icon{font-size:22px}
+.qa{background:var(--bg-hover);border:1px solid var(--border);border-radius:12px;padding:12px 16px;margin:10px 0}
+.qa summary{cursor:pointer;font-weight:700;color:var(--text)}
+.qa .opts{font-size:14px;white-space:pre-wrap}
+footer{text-align:center;padding:24px;color:var(--text2);font-size:13px;border-top:1px solid var(--border)}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.6);display:none;align-items:flex-start;justify-content:center;padding-top:12vh;z-index:2000}
+.modal.open{display:flex}
+.mbox{width:min(640px,92vw);background:var(--bg-surface);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+.mbox input{width:100%;padding:16px;background:transparent;border:0;border-bottom:1px solid var(--border);color:var(--text);font:16px var(--font)}
+.res{max-height:50vh;overflow-y:auto}
+.res a{display:block;padding:10px 16px;text-decoration:none;color:var(--text);border-bottom:1px solid var(--border);font-size:14px}
+.res a:hover{background:var(--bg-hover)}.res small{display:block;color:var(--text3)}
+.mm{display:none}
+@media(max-width:960px){.layout{grid-template-columns:1fr}.sidebar{position:fixed;left:0;top:0;height:100vh;width:300px;z-index:1500;transform:translateX(-100%);transition:transform .25s}.sidebar.open{transform:none}.close-sb,.mm{display:inline-flex}.main{padding:20px 14px 40px}.hero,.card{padding:20px}.btn span,.nav .btn kbd{display:none}}
+@media print{.nav,.sidebar,#bar,.modal{display:none!important}.layout{display:block}body{background:#fff;color:#000}.card,.hero{box-shadow:none}p,li,td{color:#222}.qa{break-inside:avoid}}
+</style>
+</head>
+<body>
+<div id="bar"></div>
+<nav class="nav"><div class="nav-in">
+<a class="brand" href="index.html"><div class="brand-ic"><svg viewBox="0 0 24 24" width="20" height="20" stroke="currentColor" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div><div><span class="brand-t">CTI · CCY4403</span><span class="brand-s">Week 4 • Collecting Threat Information</span></div></a>
+<div class="acts">
+<a class="btn" href="index.html" title="Back to course home">&#8962; <span>Home</span></a>
+<button class="btn" onclick="openSearch()" title="Search (Ctrl+K)">&#128269; <span>Search</span> <kbd>Ctrl K</kbd></button>
+<button class="btn" onclick="toggleTheme()" aria-label="Toggle light/dark theme">&#9788;</button>
+<button class="btn" onclick="print()" title="Print or save as PDF">&#128424; <span>Print</span></button>
+<button class="btn mm" onclick="menu(true)" aria-label="Open navigation">&#9776;</button>
+</div></div></nav>
+<div class="layout">
+<aside class="sidebar" id="sb">
+<div class="sb-h"><span>Navigation</span><span><span class="badge-n">8 Modules</span> <button class="btn close-sb" onclick="menu(false)" aria-label="Close navigation">&#10005;</button></span></div>
+<ul class="toc"><li class="toc-item" data-target="section-1"><a class="toc-link" href="#section-1"><span>🧭</span><span class="toc-num">01</span><span>Introduction &amp; the Three CTI Levels</span></a><ul class="sub"><li><a href="#def">Raw Information vs. Intelligence</a></li><li><a href="#lv">Three Levels</a></li></ul></li><li class="toc-item" data-target="section-2"><a class="toc-link" href="#section-2"><span>🔬</span><span class="toc-num">02</span><span>Level 1: Threat Indicators</span></a><ul class="sub"><li><a href="#ioc">IOCs</a></li><li><a href="#hash">Hashes &amp; Limits</a></li><li><a href="#rep">Domain &amp; IP Reputation</a></li><li><a href="#hp">Honeypots</a></li><li><a href="#sd">Static vs. Dynamic</a></li><li><a href="#src">Industry Sources</a></li></ul></li><li class="toc-item" data-target="section-3"><a class="toc-link" href="#section-3"><span>📊</span><span class="toc-num">03</span><span>Level 2: Threat Data Feeds</span></a><ul class="sub"><li><a href="#corr">Correlation</a></li><li><a href="#srs">Statistics, Reports, Surveys</a></li><li><a href="#sbx">Sandbox Behavior</a></li></ul></li><li class="toc-item" data-target="section-4"><a class="toc-link" href="#section-4"><span>🎯</span><span class="toc-num">04</span><span>Level 3: Strategic CTI</span></a><ul class="sub"><li><a href="#ug">Underground Economy</a></li><li><a href="#mot">Adversary Motivations</a></li><li><a href="#ttp">TTPs</a></li></ul></li><li class="toc-item" data-target="section-5"><a class="toc-link" href="#section-5"><span>🌐</span><span class="toc-num">05</span><span>Domain Collection &amp; Investigation</span></a><ul class="sub"><li><a href="#whois">WHOIS</a></li><li><a href="#tools">Investigation Tools</a></li><li><a href="#bp">Five Best Practices</a></li></ul></li><li class="toc-item" data-target="section-6"><a class="toc-link" href="#section-6"><span>🧪</span><span class="toc-num">06</span><span>Misconceptions &amp; Mini-Cases</span></a><ul class="sub"><li><a href="#myth">Common Misconceptions</a></li><li><a href="#c1">Case 1: Look-alike Domain</a></li><li><a href="#c2">Case 2: Healthcare</a></li></ul></li><li class="toc-item" data-target="section-7"><a class="toc-link" href="#section-7"><span>🧮</span><span class="toc-num">07</span><span>Quantitative Scenarios</span></a><ul class="sub"><li><a href="#s1">Bayesian Inference</a></li><li><a href="#s2">Timing &amp; Noise</a></li><li><a href="#s4">Feed Bandwidth</a></li><li><a href="#s5">Precision, Recall, F1</a></li><li><a href="#s6">Domain-Age Risk</a></li></ul></li><li class="toc-item" data-target="section-8"><a class="toc-link" href="#section-8"><span>📝</span><span class="toc-num">08</span><span>Review, Lab &amp; Cheat Sheet</span></a><ul class="sub"><li><a href="#rq">Review Questions</a></li><li><a href="#mc">Multiple Choice</a></li><li><a href="#tf">True / False</a></li><li><a href="#lab">Practical Lab</a></li><li><a href="#cheat">Cheat Sheet</a></li></ul></li></ul>
+</aside>
+<main class="main">
+<header class="hero">
+<span class="hbadge">Week 4 Study Guide &amp; Revision</span><span class="hbadge b2">Collection</span>
+<h1>Collecting <span class="grad">Cyber Threat Information</span></h1>
+<p class="lead">CCY4403 · A structured study guide covering threat intelligence levels, indicators, feeds, strategic intelligence, domain collection, practical cases, and quantitative exercises.</p>
+<div class="tags"><span class="tag">🧭 3 CTI Levels</span><span class="tag">🔬 Indicators</span><span class="tag">📊 Threat Feeds</span><span class="tag">🎯 Strategic CTI</span><span class="tag">🌐 Domain Investigation</span><span class="tag">🧮 Worked Calculations</span></div>
+<div class="use"><span>📖</span><div><b>HOW TO USE THIS GUIDE</b>Start with the three-level CTI model, then study the collection techniques and tools. Finish with the numerical examples and review questions. Click each quiz question to reveal its answer.</div></div>
+</header>
+<section class="card" id="section-1"><div class="card-h"><div class="num">01</div><h2 class="sh" id="sh1">Introduction &amp; the Three CTI Levels</h2><a class="anchor" href="#section-1" aria-label="Link to section">#</a></div><h3 id="def">1.1 Raw Information vs. Intelligence</h3>
+<p>Cyber Threat Intelligence is the process of collecting, processing, analyzing, and interpreting information about threats so an organization can make better security decisions. <strong>Raw information</strong> is an observation or data point. <strong>Intelligence</strong> is information that has been analyzed and placed into context so it can support a decision.</p>
+<h3 id="lv">1.2 The Three Levels</h3>
+<p>Each level has a different audience, time horizon, type of information, and operational purpose.</p>
+<div class="table-responsive"><table><thead><tr><th>Level</th><th>What it contains</th><th>Main users</th><th>Typical time horizon</th></tr></thead><tbody><tr><td><span class="pill pill-cyan">Level 1 – Threat Indicators</span></td><td>Atomic indicators such as file hashes, IP addresses, domains, and URLs.</td><td>Security tools, SOC analysts, automated controls.</td><td>Minutes to days</td></tr><tr><td><span class="pill pill-amber">Level 2 – Threat Data Feeds</span></td><td>Correlated indicators, statistics, reports, surveys, and malware-analysis outputs.</td><td>SOC teams, incident responders, detection engineers.</td><td>Days to weeks</td></tr><tr><td><span class="pill pill-purple">Level 3 – Strategic CTI</span></td><td>Specific adversaries, underground-economy activity, motivations, and TTPs.</td><td>Security leadership and strategic decision-makers.</td><td>Months to years</td></tr></tbody></table></div>
+<div class="callout callout-principle"><div class="callout-icon">🔑</div><div class="callout-body"><div class="callout-badge">KEY RELATIONSHIP</div><div class="callout-text">As the level increases, information becomes more contextual and useful for broader decisions. It takes longer to produce, but it usually degrades more slowly than individual indicators.</div></div></div></section><section class="card" id="section-2"><div class="card-h"><div class="num">02</div><h2 class="sh" id="sh2">Level 1: Threat Indicators</h2><a class="anchor" href="#section-2" aria-label="Link to section">#</a></div><h3 id="ioc">2.1 Indicators of Compromise (IOCs)</h3>
+<p>An IOC is an observable artifact that may indicate malicious activity or that a system has been compromised.</p>
+<ul><li><strong>File hashes:</strong> fingerprints used to identify known files or malware samples.</li><li><strong>IP addresses:</strong> addresses associated with suspicious infrastructure, such as command-and-control (C2) servers.</li><li><strong>Domains:</strong> names linked to phishing, malware hosting, or other suspicious activity.</li><li><strong>URLs:</strong> specific web addresses associated with malicious content or campaigns.</li></ul>
+<h3 id="hash">2.2 Hashes and Their Limitations</h3>
+<div class="table-responsive"><table><thead><tr><th>Algorithm</th><th>Output size</th><th>Use in the lecture</th></tr></thead><tbody><tr><td>MD5</td><td>128 bits</td><td>File fingerprint / indicator.</td></tr><tr><td>SHA-1</td><td>160 bits</td><td>File fingerprint / indicator.</td></tr></tbody></table></div>
+<p>A hash is <strong>brittle</strong>: even a small change to a file can produce a different hash. A hash match is useful evidence, but a non-match does not prove a file is safe or unrelated.</p>
+<h3 id="rep">2.3 Domain and IP Reputation</h3>
+<p>Reputation services assess whether a domain or IP has been associated with suspicious or harmful activity. The lecture lists nine high-risk categories:</p>
+<ul><li>Infrastructure hosting malware or spyware</li><li>Infrastructure distributing spam</li><li>Phishing pages designed to steal information</li><li>Peer-to-peer (P2P) services or anonymous proxies associated with suspicious activity</li><li>Command-and-control (C2) servers</li><li>Servers used for data exfiltration</li><li>Untraceable or suspicious darknet-related IP addresses</li><li>Newly registered domains, particularly those less than 30 days old</li><li>Legitimate websites that have been compromised and are being misused</li></ul>
+<div class="callout callout-warn"><div class="callout-icon">⚠️</div><div class="callout-body"><div class="callout-badge">CAUTION</div><div class="callout-text">A single characteristic is not proof of maliciousness. A newly registered domain deserves closer inspection, but age alone does not establish that it is malicious.</div></div></div>
+<h3 id="hp">2.4 Honeypots and Indicator Creation</h3>
+<p>A honeypot is a decoy system or service designed to attract and observe activity that may be malicious.</p>
+<div class="table-responsive"><table><thead><tr><th>Stage</th><th>Purpose</th></tr></thead><tbody><tr><td>1. Honeypot collection</td><td>Capture interactions, requests, payloads, and other activity directed at the decoy.</td></tr><tr><td>2. Static analysis</td><td>Inspect collected files or artifacts without executing them.</td></tr><tr><td>3. Dynamic analysis</td><td>Observe behavior by running a sample in a controlled environment.</td></tr><tr><td>4. Signature / reputation output</td><td>Create a detection signature or reputation assessment based on the analysis.</td></tr></tbody></table></div>
+<h3 id="sd">2.5 Static vs. Dynamic Analysis</h3>
+<div class="table-responsive"><table><thead><tr><th>Static analysis</th><th>Dynamic analysis</th></tr></thead><tbody><tr><td>Examines a file or artifact without running it.</td><td>Runs the sample in a controlled environment and observes behavior.</td></tr><tr><td>Can inspect file properties, strings, structure, and embedded indicators.</td><td>Can reveal network connections, process activity, file changes, and other runtime behavior.</td></tr><tr><td>Does not directly show what the sample does during execution.</td><td>Behavior may depend on the environment or execution conditions.</td></tr></tbody></table></div>
+<h3 id="src">2.6 Industry Sources for Threat Feeds</h3>
+<ul><li>Antivirus and domain-reputation vendors</li><li>Commercial Cyber Threat Intelligence (CTI) firms</li><li>Independent security laboratories and researchers</li><li>Open-source projects and Real-time Blackhole List (RBL) providers</li><li>Government and industry information-sharing groups</li></ul></section><section class="card" id="section-3"><div class="card-h"><div class="num">03</div><h2 class="sh" id="sh3">Level 2: Threat Data Feeds</h2><a class="anchor" href="#section-3" aria-label="Link to section">#</a></div><p>Level 2 moves beyond isolated indicators. It combines and correlates information to find patterns, trends, and relationships that are more useful for operational decisions.</p>
+<h3 id="corr">3.1 Correlation and Pattern Identification</h3>
+<p>A single IP address or hash may be ambiguous. When indicators are correlated with other observations, analysts can recognize a campaign, identify related infrastructure, or determine whether multiple events are connected.</p>
+<h3 id="srs">3.2 Statistics, Reports, and Surveys</h3>
+<div class="table-responsive"><table><thead><tr><th>Information type</th><th>Main question it answers</th><th>Purpose</th></tr></thead><tbody><tr><td><span class="pill pill-cyan">Statistics</span></td><td>What is happening?</td><td>Quantifies activity, frequency, distribution, or trends.</td></tr><tr><td><span class="pill pill-purple">Reports</span></td><td>Why is it happening?</td><td>Explains incidents, campaigns, causes, and context.</td></tr><tr><td><span class="pill pill-green">Surveys</span></td><td>What are peers doing?</td><td>Shows practices, experiences, and approaches across organizations.</td></tr></tbody></table></div>
+<div class="callout callout-tip"><div class="callout-icon">💡</div><div class="callout-body"><div class="callout-badge">MEMORY AID</div><div class="callout-text">Statistics = what; reports = why; surveys = what peers do.</div></div></div>
+<h3 id="sbx">3.3 Malware Sandbox Behavior as Feed Information</h3>
+<p>A sandbox is a controlled environment where suspicious software can be executed and observed. Typical behaviors in malware-analysis output:</p>
+<ul><li>Creating unusual registry entries</li><li>Attempting to disable antivirus or other security controls</li><li>Searching for files that may contain administrator information or passwords</li><li>Making outbound connections to command-and-control infrastructure</li><li>Creating connections that may stage or exfiltrate data</li></ul>
+<div class="callout callout-warn"><div class="callout-icon">⚠️</div><div class="callout-body"><div class="callout-badge">SCOPE</div><div class="callout-text">Week 4 uses malware-analysis output as an input to Level 2 feeds. The full study of static and dynamic malware-analysis techniques comes in Week 6.</div></div></div></section><section class="card" id="section-4"><div class="card-h"><div class="num">04</div><h2 class="sh" id="sh4">Level 3: Strategic CTI</h2><a class="anchor" href="#section-4" aria-label="Link to section">#</a></div><p>Strategic CTI focuses on the adversaries that may target a particular organization, their motivations and capabilities, and the threats the organization may face soon. It supports planning and leadership decisions rather than only immediate blocking or alerting.</p>
+<h3 id="ug">4.1 The Underground Economy</h3>
+<p>The ecosystem in which cybercriminals exchange tools, access, data, and services:</p>
+<ul><li><strong>Forums and marketplaces:</strong> places where actors communicate, advertise, and trade.</li><li><strong>Exploit kits and tools:</strong> malicious capabilities offered for sale or use.</li><li><strong>Criminal services:</strong> fake-website creation, password cracking, rent-a-botnet services, DDoS-as-a-Service, and bulletproof hosting.</li><li><strong>Stolen digital assets:</strong> credit-card data, PII, credentials, and session tokens.</li></ul>
+<h3 id="mot">4.2 Adversary Motivations</h3>
+<div class="table-responsive"><table><thead><tr><th>Adversary category</th><th>Typical motivation or objective</th></tr></thead><tbody><tr><td><span class="pill pill-amber">Cybercriminals</span></td><td>Financial profit, including theft or sale of credentials, payment-card data, and PII.</td></tr><tr><td><span class="pill pill-purple">Espionage actors</span></td><td>Acquisition of intellectual property, business plans, bids, or political and defense-related intelligence.</td></tr><tr><td><span class="pill pill-green">Hacktivists</span></td><td>Promoting a cause, gaining publicity, or harassing targets; targets may be broad.</td></tr></tbody></table></div>
+<h3 id="ttp">4.3 Tactics, Techniques, and Procedures (TTPs)</h3>
+<p>TTPs describe how an adversary operates. They are generally more durable than atomic indicators, because an attacker can change an IP, domain, or hash while using similar methods. The lecture ties TTP analysis to MITRE ATT&amp;CK and the Pyramid of Pain.</p>
+<p>Five methods for deducing TTPs:</p>
+<ol><li>Monitor underground forums and social media</li><li>Track discussion of exploits and tools</li><li>Observe purchases or offers in marketplaces</li><li>Analyze malware behavior</li><li>Monitor the sale or exchange of stolen assets</li></ol>
+<div class="callout callout-warn"><div class="callout-icon">⚠️</div><div class="callout-body"><div class="callout-badge">TRIANGULATE</div><div class="callout-text">No single signal proves attribution or fully explains an adversary's methods. Use multiple sources and treat conclusions with appropriate confidence.</div></div></div></section><section class="card" id="section-5"><div class="card-h"><div class="num">05</div><h2 class="sh" id="sh5">Domain Collection &amp; Investigation</h2><a class="anchor" href="#section-5" aria-label="Link to section">#</a></div><p>Domain information is useful at all three CTI levels: a domain can be an atomic indicator, part of a correlated feed, or evidence in a strategic campaign investigation.</p>
+<h3 id="whois">5.1 WHOIS</h3>
+<p>WHOIS retrieves domain registration information, which may include the registrant or owner, registrar, creation date, and expiration date.</p>
+<div class="callout callout-warn"><div class="callout-icon">⚠️</div><div class="callout-body"><div class="callout-badge">IMPORTANT LIMITATION</div><div class="callout-text">WHOIS alone is not enough to attribute a domain to a person or group. Privacy-protection services, false details, and outdated records can make registration data incomplete or misleading.</div></div></div>
+<h3 id="tools">5.2 Domain Investigation Tools</h3>
+<div class="table-responsive"><table><thead><tr><th>Tool</th><th>Main purpose described in the lecture</th></tr></thead><tbody><tr><td><b>urlscan.io</b></td><td>Examines website infrastructure, HTTP headers, and technologies used by a website.</td></tr><tr><td><b>Lookyloo</b></td><td>Visualizes website redirect chains.</td></tr><tr><td><b>VirusTotal</b></td><td>Aggregates multi-engine reputation information about files and domains.</td></tr><tr><td><b>Shodan</b></td><td>Searches for internet-connected devices and exposed services.</td></tr><tr><td><b>Maltego</b></td><td>Visualizes relationships among entities and OSINT findings.</td></tr><tr><td><b>ICANN Lookup</b></td><td>Provides domain registration lookup information.</td></tr><tr><td><b>WHOIS query</b></td><td>Retrieves available registration records for a domain.</td></tr></tbody></table></div>
+<h3 id="bp">5.3 Five Domain-Collection Best Practices</h3>
+<ol><li><strong>Use multiple sources:</strong> combine different tools and data sources rather than relying on one result.</li><li><strong>Verify information:</strong> corroborate important findings before acting on them.</li><li><strong>Stay up to date:</strong> ownership, hosting, and reputation can change.</li><li><strong>Focus on relevance:</strong> collect what supports the investigation instead of collecting everything.</li><li><strong>Protect privacy:</strong> handle personal information responsibly and consider requirements such as GDPR and CCPA.</li></ol></section><section class="card" id="section-6"><div class="card-h"><div class="num">06</div><h2 class="sh" id="sh6">Misconceptions &amp; Mini-Cases</h2><a class="anchor" href="#section-6" aria-label="Link to section">#</a></div><h3 id="myth">6.1 Common Misconceptions</h3>
+<div class="table-responsive"><table><thead><tr><th>Misconception</th><th>Correct understanding</th></tr></thead><tbody><tr><td>All indicators are equally reliable.</td><td>Indicators differ in quality, context, and confidence. A single indicator should not automatically be treated as proof.</td></tr><tr><td>More feeds automatically mean better coverage.</td><td>More feeds can create duplication and noise. Relevance, quality, and correlation matter.</td></tr><tr><td>WHOIS alone can identify the attacker.</td><td>Registration records may be private, false, or outdated and do not prove attribution.</td></tr><tr><td>Malware analysis is the same as strategic CTI.</td><td>Malware-analysis findings can feed Level 2; strategic CTI focuses on adversaries, motivations, and TTPs.</td></tr></tbody></table></div>
+<h3 id="c1">6.2 Case 1: SOC Investigation of a Phishing Look-alike Domain</h3>
+<p>A SOC team identifies a domain that resembles a legitimate organization. Analysts correlate its registration age, reputation information, and passive DNS observations. If the evidence supports a malicious assessment, the team blocks the domain through a DNS firewall and quarantines emails containing matching links.</p>
+<div class="callout callout-tip"><div class="callout-icon">💡</div><div class="callout-body"><div class="callout-badge">LESSON</div><div class="callout-text">Combine multiple sources and connect intelligence to an operational response.</div></div></div>
+<h3 id="c2">6.3 Case 2: Strategic CTI for a Healthcare Organization</h3>
+<p>Underground discussions suggest that credentials associated with healthcare organizations are being brokered, a phishing kit is being promoted, and ransomware affiliates are active. Together, these signals may point to an emerging campaign. The organization prepares by reviewing MFA coverage, EDR readiness, and incident-response procedures.</p>
+<div class="callout callout-tip"><div class="callout-icon">💡</div><div class="callout-body"><div class="callout-badge">LESSON</div><div class="callout-text">Strategic CTI uses multiple signals to anticipate risk and guide preparation.</div></div></div></section><section class="card" id="section-7"><div class="card-h"><div class="num">07</div><h2 class="sh" id="sh7">Quantitative Scenarios</h2><a class="anchor" href="#section-7" aria-label="Link to section">#</a></div><h3 id="s1">7.1 Bayesian Inference: Probability a Hit Is Malicious</h3>
+<p>Given: base rate = 5%, true-positive rate (TPR) = 0.90, false-positive rate (FPR) = 0.02.</p>
+<div class="table-responsive"><table><thead><tr><th>Step</th><th>Calculation</th></tr></thead><tbody><tr><td>Bayes' theorem</td><td>P(Malicious | Hit) = P(Hit | Malicious) × P(Malicious) / P(Hit)</td></tr><tr><td>Numerator</td><td>0.90 × 0.05 = 0.045</td></tr><tr><td>P(Hit)</td><td>(0.90 × 0.05) + (0.02 × 0.95) = 0.045 + 0.019 = 0.064</td></tr><tr><td>Posterior</td><td>0.045 / 0.064 = 0.703125 ≈ <b>70.3%</b></td></tr></tbody></table></div>
+<p>With these base-rate and test characteristics, about 70.3% of hits are expected to be malicious.</p>
+<h3 id="s2">7.2 Detection Timing and Noise Filtering</h3>
+<div class="table-responsive"><table><thead><tr><th>Scenario</th><th>Given</th><th>Result</th></tr></thead><tbody><tr><td>Detection timing</td><td>300 events/hour; 15% are true threats</td><td>300 × 0.15 = <b>45 threats/hour</b>; 60 / 45 = <b>1.33 minutes</b> per true threat on average</td></tr><tr><td>Noise filtering</td><td>50 GB/day; filter removes 96% as noise</td><td>50 × (1 − 0.96) = 50 × 0.04 = <b>2 GB/day</b> remaining</td></tr></tbody></table></div>
+<h3 id="s4">7.3 Threat-Feed Bandwidth</h3>
+<p>Given 12,000 IOCs, 3 KB per IOC, and an update every 10 minutes:</p>
+<div class="table-responsive"><table><thead><tr><th>Step</th><th>Calculation</th></tr></thead><tbody><tr><td>Data per update</td><td>12,000 × 3 KB = 36,000 KB ≈ 36 MB</td></tr><tr><td>Updates per day</td><td>24 × 60 / 10 = 144</td></tr><tr><td>Daily volume</td><td>36 MB × 144 = 5,184 MB; with 1 GB = 1,024 MB, ≈ <b>5.06 GB/day</b> per feed</td></tr></tbody></table></div>
+<p>This assumes the stated per-IOC size and excludes transport or protocol overhead.</p>
+<h3 id="s5">7.4 Precision, Recall, and F1-Score</h3>
+<p>Given TP = 360, FP = 90, FN = 140, TN = 9,410.</p>
+<div class="table-responsive"><table><thead><tr><th>Metric</th><th>Calculation</th><th>Result</th></tr></thead><tbody><tr><td>Precision</td><td>TP / (TP + FP) = 360 / 450</td><td><b>80%</b></td></tr><tr><td>Recall</td><td>TP / (TP + FN) = 360 / 500</td><td><b>72%</b></td></tr><tr><td>F1</td><td>2 × (0.80 × 0.72) / (0.80 + 0.72)</td><td><b>≈ 75.8%</b></td></tr></tbody></table></div>
+<p>Precision measures how many alerts classified as positive are actually positive. Recall measures how many actual positives are detected. F1 combines the two.</p>
+<h3 id="s6">7.5 Domain-Age Risk Scoring</h3>
+<p>Given 1,200 domains, 15% newly registered, and 40 risk points per young domain: young domains = 1,200 × 0.15 = 180; total = 180 × 40 = <b>7,200 risk points per month</b>.</p></section><section class="card" id="section-8"><div class="card-h"><div class="num">08</div><h2 class="sh" id="sh8">Review, Lab &amp; Cheat Sheet</h2><a class="anchor" href="#section-8" aria-label="Link to section">#</a></div><h3 id="rq">8.1 Review Questions</h3>
+<ol><li>What is the difference between raw threat information and actionable intelligence?</li><li>What distinguishes Level 1, Level 2, and Level 3 CTI?</li><li>Why can file hashes be brittle indicators?</li><li>What is the difference between static and dynamic analysis?</li><li>How can honeypots contribute to threat-indicator creation?</li><li>What is the difference between statistics, reports, and surveys?</li><li>Why are TTPs generally more durable than atomic indicators?</li><li>Why is WHOIS alone insufficient for attribution?</li><li>What does Lookyloo help an analyst investigate?</li><li>Why should analysts correlate multiple sources before making a decision?</li></ol>
+<h3 id="mc">8.2 Quick Knowledge Check: Multiple Choice</h3>
+<details class="qa"><summary>1. Which hash algorithm mentioned in the lecture produces a 128-bit output?</summary><p class="opts">A. SHA-1  B. MD5  C. SHA-256  D. AES</p><p><b>Answer:</b> B. MD5</p></details><details class="qa"><summary>2. Which tool is used to visualize relationships among OSINT entities?</summary><p class="opts">A. Shodan  B. Lookyloo  C. Maltego  D. ICANN Lookup</p><p><b>Answer:</b> C. Maltego</p></details><details class="qa"><summary>3. Which CTI level focuses most on adversaries, motivations, and TTPs?</summary><p class="opts">A. Level 1  B. Level 2  C. Level 3  D. None</p><p><b>Answer:</b> C. Level 3</p></details><details class="qa"><summary>4. The Bayesian example gives what posterior probability?</summary><p class="opts">A. 5%  B. 45%  C. 70.3%  D. 90%</p><p><b>Answer:</b> C. 70.3%</p></details><details class="qa"><summary>5. Which is a domain-collection best practice?</summary><p class="opts">A. Trust one source  B. Collect everything  C. Verify findings using multiple sources  D. Ignore privacy</p><p><b>Answer:</b> C. Verify findings using multiple sources</p></details><details class="qa"><summary>6. Which tool visualizes website redirect chains?</summary><p class="opts">A. Lookyloo  B. Shodan  C. Maltego  D. WHOIS</p><p><b>Answer:</b> A. Lookyloo</p></details><details class="qa"><summary>7. Which motivation is most associated with cybercriminals?</summary><p class="opts">A. Financial profit  B. Publicity only  C. Political intelligence only  D. Academic research</p><p><b>Answer:</b> A. Financial profit</p></details><details class="qa"><summary>8. Why is WHOIS alone insufficient for attribution?</summary><p class="opts">A. It never returns dates  B. Records may be private, false, or outdated  C. It only works for IP addresses  D. It executes malware</p><p><b>Answer:</b> B. Records may be private, false, or outdated</p></details><details class="qa"><summary>9. Which is an example of Level 2 information?</summary><p class="opts">A. One isolated hash  B. A correlated threat report  C. A board-level adversary assessment only  D. A password</p><p><b>Answer:</b> B. A correlated threat report</p></details><details class="qa"><summary>10. What does C2 stand for?</summary><p class="opts">A. Certificate-to-certificate  B. Command and control  C. Control-to-cloud  D. Computer-to-computer</p><p><b>Answer:</b> B. Command and control</p></details>
+<h3 id="tf">8.3 True / False Review</h3>
+<details class="qa"><summary>WHOIS information alone is sufficient to identify the attacker.</summary><p><b>Answer:</b> False. WHOIS may be incomplete, protected, false, or outdated.</p></details><details class="qa"><summary>Strategic CTI focuses on specific adversaries and their motivations.</summary><p><b>Answer:</b> True.</p></details><details class="qa"><summary>Week 4 teaches the full technical process of static and dynamic malware analysis.</summary><p><b>Answer:</b> False. Full malware-analysis techniques are covered in Week 6; Week 4 uses analysis output.</p></details><details class="qa"><summary>Honeypots can simulate services or systems to attract and observe activity.</summary><p><b>Answer:</b> True.</p></details><details class="qa"><summary>Higher CTI levels generally take longer to produce but degrade more slowly.</summary><p><b>Answer:</b> True.</p></details>
+<h3 id="lab">8.4 Practical Lab: Investigating Suspicious Domains</h3>
+<p>Investigate three suspicious domains using WHOIS or ICANN Lookup and VirusTotal. For each domain, record:</p>
+<ul><li>Domain name</li><li>Registrar</li><li>Domain age or creation date</li><li>VirusTotal score or detection summary</li><li>Your verdict (for example, suspicious, likely malicious, or inconclusive)</li><li>A short justification supported by the collected evidence</li></ul>
+<p><strong>Reflection:</strong> write about 200 words on what you learned, which sources were useful, and why multiple sources matter.</p>
+<div class="table-responsive"><table><thead><tr><th>Grading component</th><th>Weight</th></tr></thead><tbody><tr><td>Investigation table</td><td>40%</td></tr><tr><td>Justification</td><td>40%</td></tr><tr><td>Reflection</td><td>20%</td></tr></tbody></table></div>
+<h3 id="cheat">8.5 Final Cheat Sheet</h3>
+<div class="table-responsive"><table><thead><tr><th>Concept</th><th>Remember</th></tr></thead><tbody><tr><td><b>Level 1</b></td><td>Atomic indicators: hashes, IPs, domains, URLs; supports quick detection and blocking.</td></tr><tr><td><b>Level 2</b></td><td>Correlated feeds, statistics, reports, surveys, and malware-analysis outputs.</td></tr><tr><td><b>Level 3</b></td><td>Specific adversaries, underground economy, motivations, and TTPs; supports strategy.</td></tr><tr><td><b>MD5 / SHA-1</b></td><td>MD5 = 128 bits; SHA-1 = 160 bits. Small file changes can change the hash.</td></tr><tr><td><b>Static / Dynamic</b></td><td>Static = inspect without execution; dynamic = execute safely and observe behavior.</td></tr><tr><td><b>Statistics / Reports / Surveys</b></td><td>What is happening / Why it is happening / What peers are doing.</td></tr><tr><td><b>WHOIS</b></td><td>Registration information; not sufficient by itself for attribution.</td></tr><tr><td><b>Lookyloo</b></td><td>Redirect-chain visualization.</td></tr><tr><td><b>VirusTotal</b></td><td>Multi-engine file and domain reputation.</td></tr><tr><td><b>Shodan</b></td><td>Internet-connected devices and exposed services.</td></tr><tr><td><b>Maltego</b></td><td>OSINT relationship visualization.</td></tr><tr><td><b>TTPs</b></td><td>Adversary methods; often more durable than individual IOCs.</td></tr></tbody></table></div>
+<div class="callout callout-principle"><div class="callout-icon">🔑</div><div class="callout-body"><div class="callout-badge">CORE TAKEAWAY</div><div class="callout-text">Effective CTI is not collecting as many indicators as possible. It means collecting relevant information, validating it, correlating it across sources, understanding the adversary context, and turning the result into an appropriate security decision.</div></div></div></section>
+</main></div>
+<footer>&copy; Zaneso &mdash; Cyber Threat Intelligence Course Notes</footer>
+<div class="modal" id="modal" role="dialog" aria-label="Search"><div class="mbox"><input id="q" placeholder="Search this guide..." aria-label="Search this guide"><div class="res" id="res"></div></div></div>
+<script>
+const R=document.documentElement;
+function toggleTheme(){const n=R.getAttribute('data-theme')==='dark'?'light':'dark';R.setAttribute('data-theme',n);try{localStorage.setItem('theme',n)}catch(e){}}
+const sb=document.getElementById('sb');
+function menu(o){sb.classList.toggle('open',o)}
+addEventListener('scroll',()=>{const h=document.documentElement;document.getElementById('bar').style.width=(h.scrollTop/(h.scrollHeight-h.clientHeight)*100)+'%'});
+const secs=[...document.querySelectorAll('section.card')],items=[...document.querySelectorAll('.toc-item')];
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){items.forEach(i=>i.classList.toggle('active',i.dataset.target===e.target.id))}}),{rootMargin:'-20% 0px -70% 0px'});
+secs.forEach(s=>io.observe(s));
+sb.addEventListener('click',e=>{if(e.target.closest('a'))menu(false)});
+const idx=[...document.querySelectorAll('h2.sh,h3[id]')].map(h=>({id:h.id,t:h.textContent,x:(h.nextElementSibling||{}).textContent||''}));
+const M=document.getElementById('modal'),Q=document.getElementById('q'),RS=document.getElementById('res');
+function openSearch(){M.classList.add('open');Q.value='';Q.focus();find('')}
+function closeSearch(){M.classList.remove('open')}
+function find(v){v=v.toLowerCase();const r=idx.filter(i=>!v||(i.t+i.x).toLowerCase().includes(v)).slice(0,12);RS.innerHTML=r.map(i=>`<a href="#${i.id}" onclick="closeSearch()">${i.t}<small>${i.x.slice(0,90)}</small></a>`).join('')||'<a>No results</a>'}
+Q.addEventListener('input',e=>find(e.target.value));
+M.addEventListener('click',e=>{if(e.target===M)closeSearch()});
+addEventListener('keydown',e=>{if((e.ctrlKey||e.metaKey)&&e.key.toLowerCase()==='k'){e.preventDefault();openSearch()}if(e.key==='Escape')closeSearch()});
+</script>
+</body></html>
