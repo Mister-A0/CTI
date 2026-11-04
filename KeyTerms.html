@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>CTI Key Terminology - CCY4403</title>
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600;800&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#090d16;--card:#111827;--hover:#162032;--text:#f8fafc;--muted:#94a3b8;--border:rgba(255,255,255,.1)}
+[data-theme="light"]{--bg:#f8fafc;--card:#fff;--hover:#f1f5f9;--text:#0f172a;--muted:#475569;--border:rgba(0,0,0,.1)}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',system-ui,sans-serif;line-height:1.6;min-height:100vh;overflow-x:hidden}
+header{max-width:1000px;margin:0 auto;padding:56px 24px 12px;position:relative}
+.badge{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;padding:4px 12px;border-radius:20px;background:rgba(16,185,129,.15);color:#10b981;border:1px solid rgba(16,185,129,.3)}
+h1{font-size:clamp(26px,6vw,38px);font-weight:800;margin:14px 0 8px;line-height:1.2}
+h1 span{background:linear-gradient(135deg,#10b981,#06b6d4);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.sub{color:var(--muted)}
+.top{position:absolute;top:20px;right:24px;display:flex;gap:8px}
+.top button,.top a{width:44px;height:44px;background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:10px;cursor:pointer;font-size:18px;text-decoration:none;display:flex;align-items:center;justify-content:center}
+.tools{max-width:1000px;margin:0 auto;padding:8px 24px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+input[type=search]{flex:1;min-width:200px;font:inherit;padding:11px 14px;border-radius:10px;border:1px solid var(--border);background:var(--card);color:var(--text)}
+.btn{font:inherit;font-weight:700;font-size:13px;padding:9px 14px;border-radius:10px;border:1px solid var(--border);background:var(--card);color:var(--text);cursor:pointer}
+.btn.on{background:#10b981;color:#04130c;border-color:#10b981}
+main{max-width:1000px;margin:0 auto;padding:8px 24px 56px}
+h2.wk{font-family:'JetBrains Mono',monospace;font-size:13px;color:var(--wc);text-transform:uppercase;letter-spacing:1px;margin:28px 0 10px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(290px,1fr));gap:14px}
+.card{background:var(--card);border:1px solid var(--border);border-top:3px solid var(--wc);border-radius:14px;padding:16px}
+.card h3{font-size:16px;margin-bottom:4px}
+.cat{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:800;color:var(--wc);margin-bottom:6px}
+.card p{font-size:14px;color:var(--muted)}
+.fc{max-width:640px;margin:20px auto;background:var(--card);border:1px solid var(--border);border-top:3px solid var(--wc);border-radius:16px;padding:40px 24px;text-align:center;min-height:220px;cursor:pointer;display:flex;flex-direction:column;justify-content:center}
+.fc h3{font-size:24px}.fc p{color:var(--muted);margin-top:10px}
+.nav{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.cnt{text-align:center;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:12px}
+.hide{display:none!important}
+footer{text-align:center;padding:24px 16px;color:var(--muted);font-size:13px;border-top:1px solid var(--border)}
+@media(max-width:600px){header{padding:72px 16px 12px}.tools,main{padding-left:16px;padding-right:16px}.top{top:16px;right:16px}}
+</style>
+</head>
+<body>
+<header>
+  <div class="top"><a href="index.html" aria-label="Home">&#8962;</a><button id="theme" aria-label="Toggle theme">&#9788;</button></div>
+  <span class="badge">CCY4403 &middot; Weeks 1&ndash;6</span>
+  <h1><span>Key</span> Terminology</h1>
+  <p class="sub">Glossary of every key term from the six lectures. Search, filter by week, or switch to flashcards to test yourself.</p>
+</header>
+<div class="tools">
+  <input type="search" id="q" placeholder="Search terms or definitions...">
+  <button class="btn on" id="mG">Glossary</button><button class="btn" id="mF">Flashcards</button>
+</div>
+<div class="tools" id="chips"></div>
+<main id="app"></main>
+<footer>&copy; Zaneso &mdash; Cyber Threat Intelligence Course Notes</footer>
+<script>
+const T=[{"w": 1, "t": "Cyber Threat Intelligence (CTI)", "c": "Concept", "d": "Data collected, processed, and analyzed to understand a threat actor's motives, targets, and attack behaviors."}, {"w": 1, "t": "Threat Intelligence Lifecycle", "c": "Process", "d": "Six-phase cycle (Direction \u2192 Collection \u2192 Processing \u2192 Analysis \u2192 Dissemination \u2192 Feedback) that converts raw data into finished intelligence."}, {"w": 1, "t": "Direction", "c": "Lifecycle Phase 1", "d": "Planning phase that sets goals, identifies at-risk assets, and produces Priority Intelligence Requirements (PIRs)."}, {"w": 1, "t": "Collection", "c": "Lifecycle Phase 2", "d": "Gathering raw data from internal logs, threat feeds, OSINT, human sources, and closed forums."}, {"w": 1, "t": "Processing", "c": "Lifecycle Phase 3", "d": "Converting collected data into a meaningful, normalized format via decryption, translation, parsing, filtering, and correlation."}, {"w": 1, "t": "Analysis", "c": "Lifecycle Phase 4", "d": "Human-driven conversion of processed information into intelligence that supports decision-making."}, {"w": 1, "t": "Dissemination", "c": "Lifecycle Phase 5", "d": "Delivering finished intelligence to the right audience, in the right format, at the right time, via the right medium."}, {"w": 1, "t": "Feedback", "c": "Lifecycle Phase 6", "d": "Evaluating whether goals were met and adjusting priorities and process; closes the loop back into Direction."}, {"w": 1, "t": "PIRs", "c": "Output of Direction", "d": "Priority Intelligence Requirements: the specific questions the organization needs answered."}, {"w": 1, "t": "Operational Threat Intelligence (OTI)", "c": "Type", "d": "Real-time information about active threats; consumed by IR leads, security managers, fraud teams."}, {"w": 1, "t": "Strategic Threat Intelligence (STI)", "c": "Type", "d": "Long-term trend analysis for executives; delivered as white papers and briefings."}, {"w": 1, "t": "Tactical Threat Intelligence (TTI)", "c": "Type", "d": "Information about attacker TTPs; consumed by IT/security managers and threat hunters."}, {"w": 1, "t": "Technical Threat Intelligence", "c": "Type", "d": "Atomic indicators (IOCs) such as IPs, domains, hashes; consumed by SOC and IR teams."}, {"w": 1, "t": "IOC", "c": "Indicator", "d": "Indicator of Compromise: a piece of technical evidence (IP, hash, domain) that an attack may have occurred."}, {"w": 1, "t": "TTP", "c": "Indicator", "d": "Tactics, Techniques, Procedures: the behavioral signature of an adversary; decays slower than IOCs."}, {"w": 1, "t": "OSINT", "c": "Source", "d": "Open-Source Intelligence: publicly available information (news, blogs, advisories, social media)."}, {"w": 1, "t": "SIEM", "c": "Tool (complementary)", "d": "Security Information and Event Management: internal log correlation; complements CTI's external focus."}, {"w": 2, "t": "Diamond Model", "c": "Model", "d": "4-vertex intrusion decomposition (Adversary, Capability, Infrastructure, Victim)."}, {"w": 2, "t": "Cyber Kill Chain", "c": "Model", "d": "7-stage intrusion progression (Reconnaissance \u2192 Actions on Objectives)."}, {"w": 2, "t": "MITRE ATT&CK", "c": "Framework", "d": "14-tactic catalog of adversary Tactics (why) and Techniques (how)."}, {"w": 2, "t": "Tactic", "c": "ATT&CK", "d": "Adversary objective (the WHY)."}, {"w": 2, "t": "Technique", "c": "ATT&CK", "d": "Specific method to achieve a tactic (the HOW)."}, {"w": 2, "t": "Pyramid of Pain", "c": "Model", "d": "Indicator value hierarchy (hash \u2192 IP \u2192 domain \u2192 artifact \u2192 tool \u2192 TTP)."}, {"w": 2, "t": "STIX", "c": "Standard", "d": "Structured Threat Information eXpression: a sharing language."}, {"w": 2, "t": "TAXII", "c": "Standard", "d": "Trusted Automated Exchange of Intelligence Information: the transport protocol for STIX."}, {"w": 2, "t": "OSINT Framework", "c": "Methodology", "d": "Structured open-source collection methodology + tools (Maltego, Spiderfoot, etc.)."}, {"w": 2, "t": "CTIM", "c": "Model", "d": "Cyber Threat Intelligence Matrix: intelligence type \u00d7 lifecycle stage."}, {"w": 2, "t": "CTI Platform", "c": "Software", "d": "Software that operationalises frameworks (MISP, OpenCTI, Anomali, Recorded Future, ThreatConnect)."}, {"w": 2, "t": "SIEM", "c": "Tool", "d": "Security Information & Event Management; consumes CTI platform feeds to enrich events."}, {"w": 3, "t": "Nation-state / APT", "c": "Actor", "d": "State-linked adversary exhibiting persistent, sophisticated, operationally disciplined activity."}, {"w": 3, "t": "Cybercriminal", "c": "Actor", "d": "Financially motivated actor, often organised as RaaS; opportunistic, self-funded."}, {"w": 3, "t": "Hacktivist", "c": "Actor", "d": "Ideologically motivated, low-resourced, publicity-seeking actor."}, {"w": 3, "t": "Insider threat", "c": "Actor", "d": "Trusted insider (employee, contractor) misusing legitimate access."}, {"w": 3, "t": "Attribution", "c": "Process", "d": "The process of identifying the actor behind an operation."}, {"w": 3, "t": "Attribution confidence", "c": "Concept", "d": "Graded strength of attribution evidence (low / moderate / high)."}, {"w": 3, "t": "False flag", "c": "Deception", "d": "Deliberate planting of misleading evidence to misdirect attribution."}, {"w": 3, "t": "Associated Groups (aliases)", "c": "ATT&CK", "d": "MITRE ATT&CK's reconciliation of vendor-specific names for the same cluster."}, {"w": 3, "t": "G-number", "c": "ATT&CK", "d": "MITRE ATT&CK's stable, vendor-neutral identifier for a Group (e.g., G0006)."}, {"w": 4, "t": "Threat Indicator / IOC", "c": "Level 1", "d": "An entity indicating the possibility of an attack or compromise."}, {"w": 4, "t": "File Hash / Signature", "c": "Level 1", "d": "A fingerprint of a file's byte sequence (MD5, SHA-1) used to detect the same malware across hosts."}, {"w": 4, "t": "Domain / IP Reputation", "c": "Level 1", "d": "A risk rating assigned to a system or page based on observed behaviour and hosting patterns."}, {"w": 4, "t": "Honeypot", "c": "Collection", "d": "A simulated web/email server or user activity that collects files and emails encountered in normal operations."}, {"w": 4, "t": "Threat Data Feed", "c": "Level 2", "d": "Correlated and analyzed threat indicators that help teams identify attack patterns."}, {"w": 4, "t": "Strategic CTI", "c": "Level 3", "d": "Information about the specific adversaries targeting an enterprise and the dangers they pose in the near future."}, {"w": 4, "t": "TTP (Tactics, Techniques, Procedures)", "c": "Level 3", "d": "Adversary behaviour patterns; more durable than atomic indicators."}, {"w": 4, "t": "WHOIS", "c": "Tool", "d": "A protocol for querying domain registration databases; reveals owner, registrar, and creation/expiration dates."}, {"w": 4, "t": "Passive DNS", "c": "Tool", "d": "Historical DNS resolution data that reveals a domain's prior IP mappings and infrastructure history."}, {"w": 5, "t": "Threat Indicator (IOC)", "c": "Indicator", "d": "An observable data point (IP, domain, hash, behavior) that points to malicious activity; also called Indicators of Compromise."}, {"w": 5, "t": "Atomic Indicator", "c": "Indicator type", "d": "A single data point that retains its meaning in isolation, e.g., an IP address. Easy to automate, easy for adversaries to rotate."}, {"w": 5, "t": "Computed Indicator", "c": "Indicator type", "d": "A value derived from raw data via cryptographic or mathematical operations, e.g., a file hash. Stable until the underlying artifact changes."}, {"w": 5, "t": "Behavioral Indicator", "c": "Indicator type", "d": "A sequence or pattern of actions describing attacker behavior, e.g., a process execution chain. Hardest to automate, hardest to evade."}, {"w": 5, "t": "IoC Lifecycle", "c": "Process", "d": "The four-stage process (Collect \u2192 Monitor \u2192 Analyze \u2192 Deploy) by which raw forensic clues become deployed detections in SIEM, IDS/IPS, EDR, and firewalls."}, {"w": 5, "t": "Data Enrichment", "c": "Process", "d": "Adding context (geolocation, WHOIS, malware associations, threat actor profiles, historical activity) to a raw indicator to make it actionable."}, {"w": 5, "t": "IOA (Indicator of Attack)", "c": "Indicator", "d": "Behavioral evidence that an attack is in progress, even before damage occurs. Detects during the intrusion, not after."}, {"w": 5, "t": "IOF (Indicator of Fraud)", "c": "Indicator", "d": "Patterns of fraudulent activity (abnormal transactions, identity misuse, behavioral deviations), typically appearing after access has been misused."}, {"w": 6, "t": "Static Analysis Output (as a CTI input)", "c": "Analysis", "d": "Artifacts produced without executing the sample: hash, strings, PE metadata, entropy. In CTI, these are computed/atomic indicators and enrichment fields per the Week 5 taxonomy."}, {"w": 6, "t": "Dynamic Analysis / Sandbox Output (as a Level 2 feed)", "c": "Analysis", "d": "Behavioral observations + sandbox verdict produced during isolated execution. In CTI, this is the Level 2 threat data feed source established in Week 4."}, {"w": 6, "t": "Behavioral Indicator (IOA) from Sandboxing", "c": "Indicator", "d": "An observed behavior sequence (registry persistence, process injection) classified as an Indicator of Attack. IOAs assert an attack is occurring, not that a specific artifact is malicious."}, {"w": 6, "t": "Computed Indicator (Hash) from Static Analysis", "c": "Indicator", "d": "A derived value (MD5/SHA-256) computed from a sample's bytes. Computed indicators differ from atomic indicators, which are observed, not derived."}],N={"1": "Foundations of CTI", "2": "CTI Frameworks & Platforms", "3": "Threat Actor Profiling", "4": "Collecting Cyber Threat Information", "5": "Threat Indicators & Data Enrichment", "6": "Malware Analysis Recap"},C=['','#10b981','#3b82f6','#a855f7','#f59e0b','#06b6d4','#f43f5e'];
+const r=document.documentElement,s=localStorage.getItem('theme');if(s)r.setAttribute('data-theme',s);
+document.getElementById('theme').onclick=()=>{const n=r.getAttribute('data-theme')==='dark'?'light':'dark';r.setAttribute('data-theme',n);localStorage.setItem('theme',n)};
+const esc=t=>t.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+let wk=0,mode='g',idx=0,deck=[],flip=false;
+const app=document.getElementById('app'),q=document.getElementById('q');
+const chips=document.getElementById('chips');
+chips.innerHTML=[0,1,2,3,4,5,6].map(w=>`<button class="btn ${w===0?'on':''}" data-w="${w}">${w?'Week '+w:'All'}</button>`).join('');
+chips.onclick=e=>{const b=e.target.closest('button');if(!b)return;wk=+b.dataset.w;[...chips.children].forEach(c=>c.classList.toggle('on',c===b));idx=0;flip=false;render()};
+function list(){const k=q.value.trim().toLowerCase();return T.filter(x=>(!wk||x.w===wk)&&(!k||(x.t+' '+x.d+' '+x.c).toLowerCase().includes(k)))}
+function render(){
+  const L=list();
+  if(mode==='g'){
+    let h='',cur=0;
+    L.forEach(x=>{
+      if(x.w!==cur){if(cur)h+='</div>';cur=x.w;h+=`<h2 class="wk" style="--wc:${C[cur]}">Week ${cur} &middot; ${esc(N[cur])}</h2><div class="grid">`}
+      h+=`<div class="card" style="--wc:${C[x.w]}"><span class="cat">${esc(x.c)}</span><h3>${esc(x.t)}</h3><p>${esc(x.d)}</p></div>`;
+    });
+    if(cur)h+='</div>';
+    app.innerHTML=h||'<p class="sub">No matching terms.</p>';
+  }else{
+    if(!L.length){app.innerHTML='<p class="sub">No matching terms.</p>';return}
+    idx=(idx+L.length)%L.length;const x=L[idx];
+    app.innerHTML=`<div class="cnt">${idx+1} / ${L.length} &middot; Week ${x.w}</div><div class="fc" id="fc" style="--wc:${C[x.w]}">${flip?`<span class="cat">${esc(x.c)}</span><h3>${esc(x.t)}</h3><p>${esc(x.d)}</p>`:`<h3>${esc(x.t)}</h3><p>Click to reveal the definition</p>`}</div><div class="nav"><button class="btn" id="pv">&larr; Prev</button><button class="btn" id="sh">Shuffle</button><button class="btn" id="nx">Next &rarr;</button></div>`;
+    document.getElementById('fc').onclick=()=>{flip=!flip;render()};
+    document.getElementById('pv').onclick=()=>{idx--;flip=false;render()};
+    document.getElementById('nx').onclick=()=>{idx++;flip=false;render()};
+    document.getElementById('sh').onclick=()=>{T.sort(()=>Math.random()-.5);idx=0;flip=false;render()};
+  }
+}
+q.oninput=()=>{idx=0;flip=false;render()};
+const mG=document.getElementById('mG'),mF=document.getElementById('mF');
+mG.onclick=()=>{mode='g';mG.classList.add('on');mF.classList.remove('on');render()};
+mF.onclick=()=>{mode='f';mF.classList.add('on');mG.classList.remove('on');idx=0;flip=false;render()};
+render();
+</script>
+</body>
+</html>
