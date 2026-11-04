@@ -1,131 +1,677 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Cyber Threat Intelligence Course - Lectures &amp; Questions</title>
-  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600;800&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@600;800&family=Plus+Jakarta+Sans:wght@400;600;800&display=swap"
+    rel="stylesheet">
   <style>
-    :root{--bg:#090d16;--card:#111827;--hover:#162032;--text:#f8fafc;--muted:#94a3b8;--border:rgba(255,255,255,.1)}
-    [data-theme="light"]{--bg:#f8fafc;--card:#fff;--hover:#f1f5f9;--text:#0f172a;--muted:#475569;--border:rgba(0,0,0,.1)}
-    *{box-sizing:border-box;margin:0;padding:0}
-    html{-webkit-text-size-adjust:100%}
-    body{background:var(--bg);color:var(--text);font-family:'Plus Jakarta Sans',system-ui,sans-serif;line-height:1.6;min-height:100vh;overflow-x:hidden}
-    header{max-width:1100px;margin:0 auto;padding:56px 24px 24px;position:relative}
-    .badge{display:inline-block;font-size:11px;font-weight:800;letter-spacing:.6px;text-transform:uppercase;padding:4px 12px;border-radius:20px;background:rgba(16,185,129,.15);color:#10b981;border:1px solid rgba(16,185,129,.3)}
-    h1{font-size:clamp(26px,6vw,40px);font-weight:800;margin:14px 0 10px;letter-spacing:-.6px;line-height:1.2}
-    h1 span{background:linear-gradient(135deg,#10b981,#06b6d4);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
-    .sub{color:var(--muted);max-width:700px}
-    .author{margin-top:16px;font-family:'JetBrains Mono',monospace;font-size:14px;color:var(--muted)}
-    .author b{color:#10b981}
-    #theme{position:absolute;top:20px;right:24px;width:44px;height:44px;background:var(--card);color:var(--text);border:1px solid var(--border);border-radius:10px;cursor:pointer;font-size:18px}
-    .section-heading{max-width:1100px;margin:32px auto 0;padding:0 24px;font-size:22px;font-weight:800;color:var(--text)}
-    main{max-width:1100px;margin:0 auto;padding:16px 24px 40px;display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,280px),1fr));gap:20px}
-    .card{display:flex;flex-direction:column;gap:8px;background:var(--card);border:1px solid var(--border);border-top:3px solid var(--c);border-radius:16px;padding:24px;text-decoration:none;color:inherit;transition:transform .2s,border-color .2s,background .2s;-webkit-tap-highlight-color:transparent}
-    .card:hover{transform:translateY(-4px);background:var(--hover);border-color:var(--c)}
-    .wk{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:800;color:var(--c);text-transform:uppercase;letter-spacing:1px}
-    .card h2{font-size:20px;line-height:1.3;overflow-wrap:anywhere}
-    .card p{color:var(--muted);font-size:14px;flex:1}
-    .go{color:var(--c);font-weight:700;font-size:14px}
-    footer{text-align:center;padding:24px 16px calc(24px + env(safe-area-inset-bottom));color:var(--muted);font-size:13px;border-top:1px solid var(--border)}
-    @media(max-width:600px){header{padding:72px 16px 12px}.sub{font-size:14px}.section-heading{padding:0 16px;margin-top:24px;font-size:20px}main{padding:12px 16px 32px;grid-template-columns:1fr;gap:14px}.card{padding:18px}.card h2{font-size:18px}#theme{top:16px;right:16px}}
-    @media(hover:none){.card:hover{transform:none}}
+    :root {
+      --bg: #090d16;
+      --card: #111827;
+      --hover: #162032;
+      --text: #f8fafc;
+      --muted: #94a3b8;
+      --border: rgba(255, 255, 255, .1)
+    }
+
+    [data-theme="light"] {
+      --bg: #f8fafc;
+      --card: #fff;
+      --hover: #f1f5f9;
+      --text: #0f172a;
+      --muted: #475569;
+      --border: rgba(0, 0, 0, .1)
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0
+    }
+
+    html {
+      -webkit-text-size-adjust: 100%
+    }
+
+    body {
+      background: var(--bg);
+      color: var(--text);
+      font-family: 'Plus Jakarta Sans', system-ui, sans-serif;
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden
+    }
+
+    header {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 56px 24px 24px;
+      position: relative
+    }
+
+    .badge {
+      display: inline-block;
+      font-size: 11px;
+      font-weight: 800;
+      letter-spacing: .6px;
+      text-transform: uppercase;
+      padding: 4px 12px;
+      border-radius: 20px;
+      background: rgba(16, 185, 129, .15);
+      color: #10b981;
+      border: 1px solid rgba(16, 185, 129, .3)
+    }
+
+    h1 {
+      font-size: clamp(26px, 6vw, 40px);
+      font-weight: 800;
+      margin: 14px 0 10px;
+      letter-spacing: -.6px;
+      line-height: 1.2
+    }
+
+    h1 span {
+      background: linear-gradient(135deg, #10b981, #06b6d4);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent
+    }
+
+    .sub {
+      color: var(--muted);
+      max-width: 700px
+    }
+
+    .author {
+      margin-top: 16px;
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 14px;
+      color: var(--muted)
+    }
+
+    .author b {
+      color: #10b981
+    }
+
+    #theme {
+      position: absolute;
+      top: 20px;
+      right: 24px;
+      width: 44px;
+      height: 44px;
+      background: var(--card);
+      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      cursor: pointer;
+      font-size: 18px
+    }
+
+    .section-heading {
+      max-width: 1100px;
+      margin: 32px auto 0;
+      padding: 0 24px;
+      font-size: 22px;
+      font-weight: 800;
+      color: var(--text)
+    }
+
+    main {
+      max-width: 1100px;
+      margin: 0 auto;
+      padding: 16px 24px 40px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(min(100%, 280px), 1fr));
+      gap: 20px
+    }
+
+    .card {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-top: 3px solid var(--c);
+      border-radius: 16px;
+      padding: 24px;
+      text-decoration: none;
+      color: inherit;
+      transition: transform .2s, border-color .2s, background .2s;
+      -webkit-tap-highlight-color: transparent
+    }
+
+    .card:hover {
+      transform: translateY(-4px);
+      background: var(--hover);
+      border-color: var(--c)
+    }
+
+    .wk {
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 12px;
+      font-weight: 800;
+      color: var(--c);
+      text-transform: uppercase;
+      letter-spacing: 1px
+    }
+
+    .card h2 {
+      font-size: 20px;
+      line-height: 1.3;
+      overflow-wrap: anywhere
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 14px;
+      flex: 1
+    }
+
+    .go {
+      color: var(--c);
+      font-weight: 700;
+      font-size: 14px
+    }
+
+    footer {
+      text-align: center;
+      padding: 24px 16px calc(24px + env(safe-area-inset-bottom));
+      color: var(--muted);
+      font-size: 13px;
+      border-top: 1px solid var(--border)
+    }
+
+    @media(max-width:600px) {
+      header {
+        padding: 72px 16px 12px
+      }
+
+      .sub {
+        font-size: 14px
+      }
+
+      .section-heading {
+        padding: 0 16px;
+        margin-top: 24px;
+        font-size: 20px
+      }
+
+      main {
+        padding: 12px 16px 32px;
+        grid-template-columns: 1fr;
+        gap: 14px
+      }
+
+      .card {
+        padding: 18px
+      }
+
+      .card h2 {
+        font-size: 18px
+      }
+
+      #theme {
+        top: 16px;
+        right: 16px
+      }
+    }
+
+    @media(hover:none) {
+      .card:hover {
+        transform: none
+      }
+    }
 
     /* ===== Animations ===== */
-    html{scroll-behavior:smooth}
-    body{transition:background-color .4s,color .4s}
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      transition: background-color .4s, color .4s
+    }
 
     /* Drifting background glow */
-    .bg-orbs{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none}
-    .bg-orbs i{position:absolute;border-radius:50%;filter:blur(90px);opacity:.26;will-change:transform}
-    .bg-orbs i:nth-child(1){width:420px;height:420px;background:#10b981;top:-120px;left:-100px;animation:drift1 22s ease-in-out infinite alternate}
-    .bg-orbs i:nth-child(2){width:380px;height:380px;background:#06b6d4;top:30%;right:-120px;animation:drift2 26s ease-in-out infinite alternate}
-    .bg-orbs i:nth-child(3){width:340px;height:340px;background:#a855f7;bottom:-120px;left:30%;animation:drift3 30s ease-in-out infinite alternate}
-    [data-theme="light"] .bg-orbs i{opacity:.14}
-    @keyframes drift1{to{transform:translate(180px,140px) scale(1.2)}}
-    @keyframes drift2{to{transform:translate(-200px,-90px) scale(1.15)}}
-    @keyframes drift3{to{transform:translate(-160px,-120px) scale(1.25)}}
+    .bg-orbs {
+      position: fixed;
+      inset: 0;
+      z-index: -1;
+      overflow: hidden;
+      pointer-events: none
+    }
+
+    .bg-orbs i {
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(90px);
+      opacity: .26;
+      will-change: transform
+    }
+
+    .bg-orbs i:nth-child(1) {
+      width: 420px;
+      height: 420px;
+      background: #10b981;
+      top: -120px;
+      left: -100px;
+      animation: drift1 22s ease-in-out infinite alternate
+    }
+
+    .bg-orbs i:nth-child(2) {
+      width: 380px;
+      height: 380px;
+      background: #06b6d4;
+      top: 30%;
+      right: -120px;
+      animation: drift2 26s ease-in-out infinite alternate
+    }
+
+    .bg-orbs i:nth-child(3) {
+      width: 340px;
+      height: 340px;
+      background: #a855f7;
+      bottom: -120px;
+      left: 30%;
+      animation: drift3 30s ease-in-out infinite alternate
+    }
+
+    [data-theme="light"] .bg-orbs i {
+      opacity: .14
+    }
+
+    @keyframes drift1 {
+      to {
+        transform: translate(180px, 140px) scale(1.2)
+      }
+    }
+
+    @keyframes drift2 {
+      to {
+        transform: translate(-200px, -90px) scale(1.15)
+      }
+    }
+
+    @keyframes drift3 {
+      to {
+        transform: translate(-160px, -120px) scale(1.25)
+      }
+    }
 
     /* Scroll progress bar */
-    #progress{position:fixed;top:0;left:0;height:3px;width:100%;transform-origin:left;transform:scaleX(0);background:linear-gradient(90deg,#10b981,#06b6d4,#a855f7);z-index:50}
+    #progress {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      width: 100%;
+      transform-origin: left;
+      transform: scaleX(0);
+      background: linear-gradient(90deg, #10b981, #06b6d4, #a855f7);
+      z-index: 50
+    }
 
     /* Header entrance */
-    @keyframes fadeUp{from{opacity:0;transform:translateY(18px)}}
-    @keyframes fadeDown{from{opacity:0;transform:translateY(-12px)}}
-    @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(16,185,129,.6)}100%{box-shadow:0 0 0 9px rgba(16,185,129,0)}}
-    @keyframes blink{50%{opacity:0}}
-    @keyframes shine{0%,100%{background-position:0% 50%}50%{background-position:100% 50%}}
-    @keyframes spin{to{transform:rotate(360deg)}}
-    .badge{display:inline-flex;align-items:center;gap:8px;animation:fadeDown .6s cubic-bezier(.2,.7,.2,1) backwards}
-    .badge::before{content:"";width:7px;height:7px;border-radius:50%;background:#10b981;animation:pulse 1.8s ease-out infinite}
-    h1{animation:fadeUp .7s .1s cubic-bezier(.2,.7,.2,1) backwards}
-    h1 span{background-size:200% 200%;animation:shine 6s ease-in-out infinite}
-    .sub{animation:fadeUp .7s .25s cubic-bezier(.2,.7,.2,1) backwards}
-    .author{animation:fadeUp .7s .4s cubic-bezier(.2,.7,.2,1) backwards}
-    .author b::after{content:"_";margin-left:2px;animation:blink 1s steps(1) infinite}
-    #theme{transition:transform .35s cubic-bezier(.2,.7,.2,1),background-color .3s,border-color .3s;animation:fadeDown .6s .3s backwards}
-    #theme:hover{transform:rotate(35deg) scale(1.08);border-color:#10b981}
-    #theme:active{transform:scale(.92)}
-    #theme.spin{animation:spin .6s cubic-bezier(.2,.7,.2,1)}
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(18px)
+      }
+    }
+
+    @keyframes fadeDown {
+      from {
+        opacity: 0;
+        transform: translateY(-12px)
+      }
+    }
+
+    @keyframes pulse {
+      0% {
+        box-shadow: 0 0 0 0 rgba(16, 185, 129, .6)
+      }
+
+      100% {
+        box-shadow: 0 0 0 9px rgba(16, 185, 129, 0)
+      }
+    }
+
+    @keyframes blink {
+      50% {
+        opacity: 0
+      }
+    }
+
+    @keyframes shine {
+
+      0%,
+      100% {
+        background-position: 0% 50%
+      }
+
+      50% {
+        background-position: 100% 50%
+      }
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      animation: fadeDown .6s cubic-bezier(.2, .7, .2, 1) backwards
+    }
+
+    .badge::before {
+      content: "";
+      width: 7px;
+      height: 7px;
+      border-radius: 50%;
+      background: #10b981;
+      animation: pulse 1.8s ease-out infinite
+    }
+
+    h1 {
+      animation: fadeUp .7s .1s cubic-bezier(.2, .7, .2, 1) backwards
+    }
+
+    h1 span {
+      background-size: 200% 200%;
+      animation: shine 6s ease-in-out infinite
+    }
+
+    .sub {
+      animation: fadeUp .7s .25s cubic-bezier(.2, .7, .2, 1) backwards
+    }
+
+    .author {
+      animation: fadeUp .7s .4s cubic-bezier(.2, .7, .2, 1) backwards
+    }
+
+    .author b::after {
+      content: "_";
+      margin-left: 2px;
+      animation: blink 1s steps(1) infinite
+    }
+
+    #theme {
+      transition: transform .35s cubic-bezier(.2, .7, .2, 1), background-color .3s, border-color .3s;
+      animation: fadeDown .6s .3s backwards
+    }
+
+    #theme:hover {
+      transform: rotate(35deg) scale(1.08);
+      border-color: #10b981
+    }
+
+    #theme:active {
+      transform: scale(.92)
+    }
+
+    #theme.spin {
+      animation: spin .6s cubic-bezier(.2, .7, .2, 1)
+    }
 
     /* Section headings */
-    .section-heading::after{content:"";display:block;height:3px;width:56px;margin-top:8px;border-radius:3px;background:linear-gradient(90deg,#10b981,#06b6d4);transform:scaleX(0);transform-origin:left;transition:transform .7s .25s cubic-bezier(.2,.7,.2,1)}
-    .section-heading.in::after,html:not(.js) .section-heading::after{transform:none}
+    .section-heading::after {
+      content: "";
+      display: block;
+      height: 3px;
+      width: 56px;
+      margin-top: 8px;
+      border-radius: 3px;
+      background: linear-gradient(90deg, #10b981, #06b6d4);
+      transform: scaleX(0);
+      transform-origin: left;
+      transition: transform .7s .25s cubic-bezier(.2, .7, .2, 1)
+    }
+
+    .section-heading.in::after,
+    html:not(.js) .section-heading::after {
+      transform: none
+    }
 
     /* Scroll reveal (only when JS is running, so the page still works without it) */
-    @keyframes rise{from{opacity:0;transform:translateY(32px) scale(.97)}}
-    .js .card,.js .section-heading{opacity:0}
-    .js .section-heading{transform:translateX(-18px);transition:opacity .6s,transform .6s cubic-bezier(.2,.7,.2,1)}
-    .js .section-heading.in{opacity:1;transform:none}
-    .js .card.in{opacity:1;animation:rise .65s cubic-bezier(.2,.7,.2,1) backwards;animation-delay:calc(var(--i,0) * 90ms)}
+    @keyframes rise {
+      from {
+        opacity: 0;
+        transform: translateY(32px) scale(.97)
+      }
+    }
+
+    .js .card,
+    .js .section-heading {
+      opacity: 0
+    }
+
+    .js .section-heading {
+      transform: translateX(-18px);
+      transition: opacity .6s, transform .6s cubic-bezier(.2, .7, .2, 1)
+    }
+
+    .js .section-heading.in {
+      opacity: 1;
+      transform: none
+    }
+
+    .js .card.in {
+      opacity: 1;
+      animation: rise .65s cubic-bezier(.2, .7, .2, 1) backwards;
+      animation-delay: calc(var(--i, 0) * 90ms)
+    }
 
     /* Card hover: lift, glow, cursor spotlight, sliding arrow */
-    .card{position:relative;overflow:hidden;transition:transform .3s cubic-bezier(.2,.7,.2,1),border-color .3s,background-color .3s,box-shadow .3s}
-    .card::before{content:"";position:absolute;inset:0;pointer-events:none;opacity:0;transition:opacity .3s;background:radial-gradient(260px circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.07),transparent 65%);background:radial-gradient(260px circle at var(--mx,50%) var(--my,50%),color-mix(in srgb,var(--c) 22%,transparent),transparent 65%)}
-    .card:hover::before{opacity:1}
-    .card:hover{transform:translateY(-6px);box-shadow:0 16px 36px -14px var(--c);box-shadow:0 16px 36px -14px color-mix(in srgb,var(--c) 55%,transparent)}
-    .card:active{transform:translateY(-2px) scale(.985)}
-    .go{display:inline-block;transition:transform .3s cubic-bezier(.2,.7,.2,1)}
-    .card:hover .go{transform:translateX(6px)}
-    .card h2{transition:color .3s}
-    @media(hover:none){.card:hover{transform:none;box-shadow:none}.card:hover .go{transform:none}}
+    .card {
+      position: relative;
+      overflow: hidden;
+      transition: transform .3s cubic-bezier(.2, .7, .2, 1), border-color .3s, background-color .3s, box-shadow .3s
+    }
+
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .3s;
+      background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, .07), transparent 65%);
+      background: radial-gradient(260px circle at var(--mx, 50%) var(--my, 50%), color-mix(in srgb, var(--c) 22%, transparent), transparent 65%)
+    }
+
+    .card:hover::before {
+      opacity: 1
+    }
+
+    .card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 16px 36px -14px var(--c);
+      box-shadow: 0 16px 36px -14px color-mix(in srgb, var(--c) 55%, transparent)
+    }
+
+    .card:active {
+      transform: translateY(-2px) scale(.985)
+    }
+
+    .go {
+      display: inline-block;
+      transition: transform .3s cubic-bezier(.2, .7, .2, 1)
+    }
+
+    .card:hover .go {
+      transform: translateX(6px)
+    }
+
+    .card h2 {
+      transition: color .3s
+    }
+
+    @media(hover:none) {
+      .card:hover {
+        transform: none;
+        box-shadow: none
+      }
+
+      .card:hover .go {
+        transform: none
+      }
+    }
 
     /* Moving network background (drawn by script) */
-    #net{position:fixed;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none}
+    #net {
+      position: fixed;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1;
+      pointer-events: none
+    }
 
     /* Scrolling ticker bands */
-    @keyframes marquee{to{transform:translateX(-50%)}}
-    @keyframes sweep{from{background-position:-40% 0}to{background-position:140% 0}}
-    .ticker{position:relative;overflow:hidden;margin:12px 0 0;padding:12px 0;border-block:1px solid var(--border);font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:600;color:var(--muted);-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);animation:fadeUp .7s .55s cubic-bezier(.2,.7,.2,1) backwards}
-    .ticker::after{content:"";position:absolute;left:0;right:0;bottom:0;height:2px;background:linear-gradient(90deg,transparent,#10b981,#06b6d4,transparent) no-repeat;background-size:30% 100%;animation:sweep 4s linear infinite}
-    .ticker-track{display:flex;width:max-content;animation:marquee 45s linear infinite}
-    .ticker.rev .ticker-track{animation-direction:reverse;animation-duration:38s}
-    .ticker:hover .ticker-track{animation-play-state:paused}
-    .ticker-group{display:flex}
-    .ticker-group span{white-space:nowrap;padding:0 22px;transition:color .25s}
-    .ticker-group span::before{content:"\25C6";color:#10b981;margin-right:22px}
-    .ticker-group span:nth-child(3n+2)::before{color:#06b6d4}
-    .ticker-group span:nth-child(3n+3)::before{color:#a855f7}
-    .ticker-group span:hover{color:var(--text)}
-    .ticker.last{margin:0}
+    @keyframes marquee {
+      to {
+        transform: translateX(-50%)
+      }
+    }
+
+    @keyframes sweep {
+      from {
+        background-position: -40% 0
+      }
+
+      to {
+        background-position: 140% 0
+      }
+    }
+
+    .ticker {
+      position: relative;
+      overflow: hidden;
+      margin: 12px 0 0;
+      padding: 12px 0;
+      border-block: 1px solid var(--border);
+      font-family: 'JetBrains Mono', monospace;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--muted);
+      -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+      mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent);
+      animation: fadeUp .7s .55s cubic-bezier(.2, .7, .2, 1) backwards
+    }
+
+    .ticker::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      height: 2px;
+      background: linear-gradient(90deg, transparent, #10b981, #06b6d4, transparent) no-repeat;
+      background-size: 30% 100%;
+      animation: sweep 4s linear infinite
+    }
+
+    .ticker-track {
+      display: flex;
+      width: max-content;
+      animation: marquee 45s linear infinite
+    }
+
+    .ticker.rev .ticker-track {
+      animation-direction: reverse;
+      animation-duration: 38s
+    }
+
+    .ticker:hover .ticker-track {
+      animation-play-state: paused
+    }
+
+    .ticker-group {
+      display: flex
+    }
+
+    .ticker-group span {
+      white-space: nowrap;
+      padding: 0 22px;
+      transition: color .25s
+    }
+
+    .ticker-group span::before {
+      content: "\25C6";
+      color: #10b981;
+      margin-right: 22px
+    }
+
+    .ticker-group span:nth-child(3n+2)::before {
+      color: #06b6d4
+    }
+
+    .ticker-group span:nth-child(3n+3)::before {
+      color: #a855f7
+    }
+
+    .ticker-group span:hover {
+      color: var(--text)
+    }
+
+    .ticker.last {
+      margin: 0
+    }
 
     /* Phone tweaks: lighter glows, tighter tickers */
-    @media(max-width:600px){
-      .bg-orbs i{width:260px!important;height:260px!important;filter:blur(60px)}
-      .ticker{font-size:12px;padding:10px 0}
-      .ticker-group span{padding:0 16px}
-      .ticker-group span::before{margin-right:16px}
+    @media(max-width:600px) {
+      .bg-orbs i {
+        width: 260px !important;
+        height: 260px !important;
+        filter: blur(60px)
+      }
+
+      .ticker {
+        font-size: 12px;
+        padding: 10px 0
+      }
+
+      .ticker-group span {
+        padding: 0 16px
+      }
+
+      .ticker-group span::before {
+        margin-right: 16px
+      }
     }
 
     /* Respect users who prefer reduced motion */
-    @media(prefers-reduced-motion:reduce){
-      *,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
-      .js .card,.js .section-heading{opacity:1!important;transform:none!important}
-      .section-heading::after{transform:none!important}
+    @media(prefers-reduced-motion:reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition: none !important;
+        scroll-behavior: auto !important
+      }
+
+      .js .card,
+      .js .section-heading {
+        opacity: 1 !important;
+        transform: none !important
+      }
+
+      .section-heading::after {
+        transform: none !important
+      }
     }
   </style>
   <script>document.documentElement.classList.add('js')</script>
 </head>
+
 <body>
   <div class="bg-orbs" aria-hidden="true"><i></i><i></i><i></i></div>
   <canvas id="net" aria-hidden="true"></canvas>
@@ -134,68 +680,85 @@
     <button id="theme" aria-label="Toggle theme">&#9788;</button>
     <span class="badge">Lecture Summaries &amp; Revision Guides</span>
     <h1><span>Cyber Threat Intelligence</span> Course</h1>
-    <p class="sub">CCY4403. Choose a lecture, question bank or the glossary below. Each page has a Home button to return here.</p>
+    <p class="sub">CCY4403. Choose a lecture, question bank or the glossary below. Each page has a Home button to return
+      here.</p>
     <p class="author">Author: <b>Zaneso</b></p>
   </header>
 
   <div class="ticker" aria-hidden="true">
     <div class="ticker-track">
-      <div class="ticker-group"><span>STIX</span><span>TAXII</span><span>MITRE ATT&amp;CK</span><span>Cyber Kill Chain</span><span>Diamond Model</span><span>Pyramid of Pain</span><span>IOC</span><span>TTPs</span><span>OSINT</span><span>YARA</span><span>Threat Actors</span><span>Attribution</span></div>
-      <div class="ticker-group"><span>STIX</span><span>TAXII</span><span>MITRE ATT&amp;CK</span><span>Cyber Kill Chain</span><span>Diamond Model</span><span>Pyramid of Pain</span><span>IOC</span><span>TTPs</span><span>OSINT</span><span>YARA</span><span>Threat Actors</span><span>Attribution</span></div>
+      <div class="ticker-group"><span>STIX</span><span>TAXII</span><span>MITRE ATT&amp;CK</span><span>Cyber Kill
+          Chain</span><span>Diamond Model</span><span>Pyramid of
+          Pain</span><span>IOC</span><span>TTPs</span><span>OSINT</span><span>YARA</span><span>Threat
+          Actors</span><span>Attribution</span></div>
+      <div class="ticker-group"><span>STIX</span><span>TAXII</span><span>MITRE ATT&amp;CK</span><span>Cyber Kill
+          Chain</span><span>Diamond Model</span><span>Pyramid of
+          Pain</span><span>IOC</span><span>TTPs</span><span>OSINT</span><span>YARA</span><span>Threat
+          Actors</span><span>Attribution</span></div>
     </div>
   </div>
 
   <h2 class="section-heading">Lecture Summaries</h2>
   <main>
-    <a class="card" href="Lectures/Week1_Foundations_of_CTI_Summary.html" style="--c:#10b981"><span class="wk">Week 1</span>
+    <a class="card" href="Week1_Foundations_of_CTI_Summary.html" style="--c:#10b981"><span class="wk">Week 1</span>
       <h2>Foundations of CTI</h2>
-      <p>Intelligence vs information, the six-phase lifecycle, the four CTI types and CTI tools.</p><span class="go">Open lecture &rarr;</span>
+      <p>Intelligence vs information, the six-phase lifecycle, the four CTI types and CTI tools.</p><span
+        class="go">Open lecture &rarr;</span>
     </a>
-    <a class="card" href="Lectures/CCY4403_Week_2_CTI_Frameworks_Detailed_Summary.html" style="--c:#06b6d4"><span class="wk">Week 2</span>
+    <a class="card" href="CCY4403_Week_2_CTI_Frameworks_Detailed_Summary.html" style="--c:#06b6d4"><span class="wk">Week
+        2</span>
       <h2>CTI Frameworks & Platforms</h2>
-      <p>Diamond Model, Kill Chain, MITRE ATT&CK, Pyramid of Pain, STIX/TAXII, OSINT, CTIM and platforms.</p><span class="go">Open lecture &rarr;</span>
+      <p>Diamond Model, Kill Chain, MITRE ATT&CK, Pyramid of Pain, STIX/TAXII, OSINT, CTIM and platforms.</p><span
+        class="go">Open lecture &rarr;</span>
     </a>
-    <a class="card" href="Lectures/Week3_Threat_Actor_Profiling_Summary.html" style="--c:#a855f7"><span class="wk">Week 3</span>
+    <a class="card" href="Week3_Threat_Actor_Profiling_Summary.html" style="--c:#a855f7"><span class="wk">Week 3</span>
       <h2>Threat Actor Profiling</h2>
-      <p>Actor categories, ATT&CK Group pages, attribution confidence and false flags.</p><span class="go">Open lecture &rarr;</span>
+      <p>Actor categories, ATT&CK Group pages, attribution confidence and false flags.</p><span class="go">Open lecture
+        &rarr;</span>
     </a>
-    <a class="card" href="Lectures/Week_4_Collecting_Cyber_Threat_Information_Detailed_Summary.html" style="--c:#f59e0b"><span class="wk">Week 4</span>
+    <a class="card" href="Week_4_Collecting_Cyber_Threat_Information_Detailed_Summary.html" style="--c:#f59e0b"><span
+        class="wk">Week 4</span>
       <h2>Collecting Cyber Threat Information</h2>
-      <p>Three-level CTI model, indicators, threat data feeds, strategic CTI and domain collection.</p><span class="go">Open lecture &rarr;</span>
+      <p>Three-level CTI model, indicators, threat data feeds, strategic CTI and domain collection.</p><span
+        class="go">Open lecture &rarr;</span>
     </a>
-    <a class="card" href="Lectures/Week_5_Threat_Indicators_and_Data_Enrichment_Detailed_Summary.html" style="--c:#f43f5e"><span class="wk">Week 5</span>
+    <a class="card" href="Week_5_Threat_Indicators_and_Data_Enrichment_Detailed_Summary.html" style="--c:#f43f5e"><span
+        class="wk">Week 5</span>
       <h2>Threat Indicators & Data Enrichment</h2>
-      <p>Atomic, computed and behavioral indicators, the IoC lifecycle, enrichment and IOC vs IOA vs IOF.</p><span class="go">Open lecture &rarr;</span>
+      <p>Atomic, computed and behavioral indicators, the IoC lifecycle, enrichment and IOC vs IOA vs IOF.</p><span
+        class="go">Open lecture &rarr;</span>
     </a>
-    <a class="card" href="Lectures/Week6_Malware_Analysis_CTI_Recap_Summary.html" style="--c:#3b82f6"><span class="wk">Week 6</span>
+    <a class="card" href="Week6_Malware_Analysis_CTI_Recap_Summary.html" style="--c:#3b82f6"><span class="wk">Week
+        6</span>
       <h2>Malware Analysis (Static + Dynamic) Recap</h2>
-      <p>Static and dynamic analysis as inputs to Level 1/2 indicators and enrichment.</p><span class="go">Open lecture &rarr;</span>
+      <p>Static and dynamic analysis as inputs to Level 1/2 indicators and enrichment.</p><span class="go">Open lecture
+        &rarr;</span>
     </a>
   </main>
 
   <h2 class="section-heading">Practice Questions &amp; Exams From Lectures</h2>
   <main>
-    <a class="card" href="Questions/Week_1_Questions.html" style="--c:#10b981"><span class="wk">Week 1 Questions</span>
+    <a class="card" href="Week_1_Questions.html" style="--c:#10b981"><span class="wk">Week 1 Questions</span>
       <h2>Foundations of CTI Questions</h2>
       <p>Practice MCQ, True/False, and review questions for Week 1.</p><span class="go">Open questions &rarr;</span>
     </a>
-    <a class="card" href="Questions/Week_2_Questions.html" style="--c:#06b6d4"><span class="wk">Week 2 Questions</span>
+    <a class="card" href="Week_2_Questions.html" style="--c:#06b6d4"><span class="wk">Week 2 Questions</span>
       <h2>CTI Frameworks Questions</h2>
       <p>Practice MCQ, True/False, and review questions for Week 2.</p><span class="go">Open questions &rarr;</span>
     </a>
-    <a class="card" href="Questions/Week_3_Questions.html" style="--c:#a855f7"><span class="wk">Week 3 Questions</span>
+    <a class="card" href="Week_3_Questions.html" style="--c:#a855f7"><span class="wk">Week 3 Questions</span>
       <h2>Threat Actor Profiling Questions</h2>
       <p>Practice MCQ, True/False, and review questions for Week 3.</p><span class="go">Open questions &rarr;</span>
     </a>
-    <a class="card" href="Questions/Week_4_Questions.html" style="--c:#f59e0b"><span class="wk">Week 4 Questions</span>
+    <a class="card" href="Week_4_Questions.html" style="--c:#f59e0b"><span class="wk">Week 4 Questions</span>
       <h2>Collecting CTI Questions</h2>
       <p>Practice MCQ, True/False, and review questions for Week 4.</p><span class="go">Open questions &rarr;</span>
     </a>
-    <a class="card" href="Questions/Week_5_Questions.html" style="--c:#f43f5e"><span class="wk">Week 5 Questions</span>
+    <a class="card" href="Week_5_Questions.html" style="--c:#f43f5e"><span class="wk">Week 5 Questions</span>
       <h2>Indicators & Enrichment Questions</h2>
       <p>Practice MCQ, True/False, and review questions for Week 5.</p><span class="go">Open questions &rarr;</span>
     </a>
-    <a class="card" href="Questions/Week_6_Questions.html" style="--c:#3b82f6"><span class="wk">Week 6 Questions</span>
+    <a class="card" href="Week_6_Questions.html" style="--c:#3b82f6"><span class="wk">Week 6 Questions</span>
       <h2>Malware Analysis Recap Questions</h2>
       <p>Practice MCQ, True/False, and review questions for Week 6.</p><span class="go">Open questions &rarr;</span>
     </a>
@@ -213,8 +776,16 @@
 
   <div class="ticker rev last" aria-hidden="true">
     <div class="ticker-track">
-      <div class="ticker-group"><span>Planning</span><span>Collection</span><span>Processing</span><span>Analysis</span><span>Dissemination</span><span>Feedback</span><span>Static Analysis</span><span>Dynamic Analysis</span><span>Enrichment</span><span>Strategic CTI</span><span>Tactical CTI</span><span>Operational CTI</span></div>
-      <div class="ticker-group"><span>Planning</span><span>Collection</span><span>Processing</span><span>Analysis</span><span>Dissemination</span><span>Feedback</span><span>Static Analysis</span><span>Dynamic Analysis</span><span>Enrichment</span><span>Strategic CTI</span><span>Tactical CTI</span><span>Operational CTI</span></div>
+      <div class="ticker-group">
+        <span>Planning</span><span>Collection</span><span>Processing</span><span>Analysis</span><span>Dissemination</span><span>Feedback</span><span>Static
+          Analysis</span><span>Dynamic Analysis</span><span>Enrichment</span><span>Strategic CTI</span><span>Tactical
+          CTI</span><span>Operational CTI</span>
+      </div>
+      <div class="ticker-group">
+        <span>Planning</span><span>Collection</span><span>Processing</span><span>Analysis</span><span>Dissemination</span><span>Feedback</span><span>Static
+          Analysis</span><span>Dynamic Analysis</span><span>Enrichment</span><span>Strategic CTI</span><span>Tactical
+          CTI</span><span>Operational CTI</span>
+      </div>
     </div>
   </div>
 
@@ -319,4 +890,5 @@
     })();
   </script>
 </body>
+
 </html>
